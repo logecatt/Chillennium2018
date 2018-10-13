@@ -42,7 +42,9 @@ var eye_x = x
 
 aim_angle_min = 135
 aim_angle_max = 240
-if x &gt; room_width/2 {
+aim_angle_min_buffer = 85
+aim_angle_max_buffer = 275
+if x &gt; room_width / 2 {
     gamepad = global.player2;
 } else {
     gamepad = global.player1;
@@ -51,6 +53,8 @@ if x &gt; room_width/2 {
     target_angle = 180 - target_angle
     aim_angle_min = 180 - aim_angle_min
     aim_angle_max = 540 - aim_angle_max
+    aim_angle_min_buffer = 180 - aim_angle_min
+    aim_angle_max_buffer = 540 - aim_angle_max
     tongue_x += sprite_width
     eye_x += sprite_width
 }
@@ -58,6 +62,7 @@ aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 60
 target_lock_angle = 6.75
+transition_speed = 0.05
 
 tongue = instance_create(tongue_x, y, obj_tongue)
 eye = instance_create(eye_x, y, obj_eye)
@@ -93,13 +98,13 @@ if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
     if(gamepad == global.player2) {
         if new_angle &gt; aim_angle_min and new_angle &lt; aim_angle_max {
             aim_angle = new_angle
-        } else {
+        } else if new_angle &gt; aim_angle_min_buffer and new_angle &lt; aim_angle_max_buffer {
             aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
         }
     } else {
         if new_angle &lt; aim_angle_min or new_angle &gt; aim_angle_max {
             aim_angle = new_angle
-        } else {
+        } else if new_angle &lt; aim_angle_min_buffer or new_angle &gt; aim_angle_max_buffer {
             aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
         }
     }
@@ -192,16 +197,25 @@ if not fired {
             
 switch type {
 case obj_swarm_grass:
-    image_index = 0
+    target_image_index = 0
     break
 case obj_swarm_water:
-    image_index = 1
+    target_image_index = 1
     break
 case obj_swarm_fire:
-    image_index = 2
+    target_image_index = 2
     break
 default:
     break
+}
+
+if image_index != target_image_index {
+    var transition_dir = sign(target_image_index - image_index)
+    image_index = image_index - transition_dir * transition_speed
+    var new_transition_dir = sign(target_image_index - image_index)
+    if (transition_dir != new_transition_dir) {
+        image_index = target_image_index
+    }
 }
 
 // tongue fire
