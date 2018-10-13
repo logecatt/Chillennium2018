@@ -45,6 +45,7 @@ if(x &gt; room_width/2) {
     fire_angle += 180
     aim_angle_min = 135
     aim_angle_max = 240
+    target_angle = 180
 }
 else {
     gamepad = global.player1;
@@ -52,11 +53,13 @@ else {
     aim_angle_max = 300
     tongue_x += sprite_width
     eye_x += sprite_width
+    target_angle = 0
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 100
 fire_distance = 1200
+target_lock_angle = 6.5
 
 tongue = instance_create(tongue_x, y, obj_tongue)
 eye = instance_create(eye_x, y, obj_eye)
@@ -87,20 +90,20 @@ eye = instance_create(eye_x, y, obj_eye)
 var x_tilt = gamepad_axis_value(gamepad, gp_axislh)
 var y_tilt = gamepad_axis_value(gamepad, gp_axislv)
 
-if(gamepad == global.player2) {
-    if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
-        var new_angle = point_direction(0, 0, x_tilt, y_tilt)
+if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
+    var new_angle = point_direction(0, 0, x_tilt, y_tilt)
+    if(gamepad == global.player2) {
         if new_angle &gt; aim_angle_min and new_angle &lt; aim_angle_max {
             aim_angle = new_angle
         }
-    }
-}
-else {
-    if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
-        var new_angle = point_direction(0, 0, x_tilt, y_tilt)
+    } else {
         if new_angle &lt; aim_angle_min or new_angle &gt; aim_angle_max {
             aim_angle = new_angle
         }
+    }
+    
+    if abs(aim_angle - target_angle) &lt; target_lock_angle {
+        aim_angle = target_angle
     }
 }
 eye.image_angle = aim_angle    
@@ -221,6 +224,30 @@ with obj_chameleon {
         other.enemy = self
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self()
+draw_text(x, y - 100, string(healthiness))
 </string>
           </argument>
         </arguments>
