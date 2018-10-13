@@ -11,6 +11,7 @@
     <sound>sound\snd_flowers</sound>
     <sound>sound\snd_splash</sound>
     <sound>sound\snd_punch</sound>
+    <sound>sound\snd_menu_button</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_swarm_fire</sprite>
@@ -42,12 +43,12 @@
     <object>objects\obj_tutorial_and_credits</object>
     <object>objects\obj_final</object>
     <object>objects\obj_select</object>
-    <object>objects\obj_controllers</object>
+    <object>objects\obj_select</object>
     <object>objects\obj_countdown</object>
     <object>objects\obj_poison</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_menu</room>
+    <room>rooms\rm_main</room>
     <room>rooms\rm_main</room>
     <room>rooms\rm_tutorial</room>
     <room>rooms\rm_credits</room>
