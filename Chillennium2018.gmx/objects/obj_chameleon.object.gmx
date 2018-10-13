@@ -46,6 +46,10 @@ aim_angle_min_buffer = 85
 aim_angle_max_buffer = 275
 if x &gt; room_width / 2 {
     gamepad = global.player2;
+    image_xscale = -1;
+    x -= sprite_get_xoffset(sprite_index);
+    tongue_x = x;
+    eye_x = x;
 } else {
     gamepad = global.player1;
     aim_angle = 180 - aim_angle
