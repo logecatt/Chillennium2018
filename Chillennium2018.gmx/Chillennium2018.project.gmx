@@ -22,6 +22,9 @@
     <sprite>sprites\spr_eye</sprite>
     <sprite>sprites\spr_controller</sprite>
     <sprite>sprites\spr_poison</sprite>
+    <sprite>sprites\spr_head_fire</sprite>
+    <sprite>sprites\spr_head_grass</sprite>
+    <sprite>sprites\spr_head_water</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -45,6 +48,7 @@
     <object>objects\obj_controllers</object>
     <object>objects\obj_countdown</object>
     <object>objects\obj_poison</object>
+    <object>objects\obj_head</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
