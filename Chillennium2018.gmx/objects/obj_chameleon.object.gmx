@@ -28,6 +28,9 @@
             <string>image_speed = 0
 insect = noone
 
+type = obj_swarm_grass
+hit = false
+healthiness = 3
 fired = false
 can_fire = true
 aim_angle = 0
@@ -66,9 +69,7 @@ eye = instance_create(x, y, obj_eye)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// TODO allow prefire slightly
-
-// determine aim angle
+            <string>// determine aim angle
 var x_tilt = gamepad_axis_value(gamepad, gp_axislh)
 var y_tilt = gamepad_axis_value(gamepad, gp_axislv)
 
@@ -78,31 +79,36 @@ if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
         aim_angle = new_angle
     }
 }
-eye.image_angle = aim_angle
-    
+eye.image_angle = aim_angle    
+
 if not fired {
     tongue.direction = aim_angle
     tongue.image_angle = aim_angle
-
-    // tongue fire
-    var trigger_val = gamepad_button_value(gamepad, gp_shoulderlb)
-    if trigger_val &gt; fire_deadzone {
-        if can_fire {
-            fired = true
-            can_fire = false
-            fire_angle = aim_angle
-            tongue.speed = fire_speed
-        }
-    } else {
-        can_fire = true
-    }
 } else {
     // tongue collision
-    if not instance_exists(insect) {
+    // collision with insect
+    if not hit {
+        if not instance_exists(insect) {
+            with tongue {
+                other.insect = instance_place(x, y, obj_swarm)
+            }
+            if instance_exists(insect) {
+                hit = true
+            }
+        }
+        
+        // collision with enemy
         with tongue {
-            other.insect = instance_place(x, y, obj_swarm)
+            if instance_place(x, y, obj_eye) == other.enemy.eye {
+                // determine if a valid hit occurred
+                if scr_type_wins(other.type, other.enemy.type) {
+                    other.enemy.healthiness--
+                    other.hit = true
+                }
+            }
         }
     }
+    
 
     // check tongue distance
     var distance = point_distance(x, y, tongue.x, tongue.y)
@@ -115,6 +121,7 @@ if not fired {
         tongue.x = x
         tongue.y = y
         fired = false
+        hit = false
         if instance_exists(insect) {
             type = insect.object_index
             insect = noone
@@ -133,6 +140,51 @@ if not fired {
                 break
             }
         }
+    }
+}
+
+// tongue fire
+var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
+if trigger_val &gt; fire_deadzone {
+    if can_fire and not fired {
+        fired = true
+        can_fire = false
+        fire_angle = aim_angle
+        tongue.speed = fire_speed
+    }
+} else {
+    if fired {
+        // return
+        tongue.speed = -fire_speed
+    }
+    can_fire = true
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// set reference
+with obj_chameleon {
+    if self.id != other.id {
+        other.enemy = self
     }
 }
 </string>

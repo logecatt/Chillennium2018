@@ -19,6 +19,9 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_type_wins.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\obj_eye</object>
     <object>objects\obj_chameleon</object>
