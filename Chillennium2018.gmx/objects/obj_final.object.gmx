@@ -103,6 +103,12 @@ if(gamepad != -1) {
             <kind>1</kind>
             <string>if(gamepad != -1) {
     draw_set_halign(fa_center);
+    if(global.winner == 1) {
+        draw_text(room_width/2, room_height/2 - 50, "Player 1 Wins!");
+    }
+    else {
+        draw_text(room_width/2, room_height/2 - 50, "Player 2 Wins!");
+    }
     draw_text(room_width/2 - 50, room_height/2, text1);
     draw_text(room_width/2 + 50, room_height/2, text2);
     switch(select) {
