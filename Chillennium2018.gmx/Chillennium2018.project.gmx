@@ -20,6 +20,7 @@
     <sprite>sprites\spr_tongue</sprite>
     <sprite>sprites\spr_eye</sprite>
     <sprite>sprites\spr_controller</sprite>
+    <sprite>sprites\spr_poison</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -42,6 +43,7 @@
     <object>objects\obj_select</object>
     <object>objects\obj_controllers</object>
     <object>objects\obj_countdown</object>
+    <object>objects\obj_poison</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
