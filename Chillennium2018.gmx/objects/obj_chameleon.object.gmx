@@ -36,6 +36,8 @@ can_fire = true
 aim_angle = 0
 fire_angle = 0
 image_angle = 0
+tongue_x = x
+eye_x = x
 
 if(x &gt; room_width/2) {
     gamepad = global.player2;
@@ -48,14 +50,16 @@ else {
     gamepad = global.player1;
     aim_angle_min = 45
     aim_angle_max = 300
+    tongue_x += sprite_width
+    eye_x += sprite_width
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 100
 fire_distance = 1200
 
-tongue = instance_create(x, y, obj_tongue)
-eye = instance_create(x, y, obj_eye)
+tongue = instance_create(tongue_x, y, obj_tongue)
+eye = instance_create(eye_x, y, obj_eye)
 
 </string>
           </argument>
@@ -131,14 +135,14 @@ if not fired {
     
 
     // check tongue distance
-    var distance = point_distance(x, y, tongue.x, tongue.y)
+    var distance = point_distance(tongue_x, y, tongue.x, tongue.y)
     if distance &gt; fire_distance {
         // return
         tongue.speed = -fire_speed
-    } else if abs(fire_angle - point_direction(x, y, tongue.x, tongue.y)) &gt; 0.1 {
+    } else if abs(fire_angle - point_direction(tongue_x, y, tongue.x, tongue.y)) &gt; 0.1 {
         // stop
         tongue.speed = 0
-        tongue.x = x
+        tongue.x = tongue_x
         tongue.y = y
         fired = false
         hit = false
