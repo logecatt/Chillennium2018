@@ -25,6 +25,7 @@
   <objects name="objects">
     <object>objects\obj_eye</object>
     <object>objects\obj_chameleon</object>
+    <object>objects\obj_chameleon2</object>
     <object>objects\obj_tongue</object>
     <object>objects\obj_swarm</object>
     <object>objects\obj_swarm_fire</object>
