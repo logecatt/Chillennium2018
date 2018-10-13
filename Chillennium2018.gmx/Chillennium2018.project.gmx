@@ -7,9 +7,6 @@
   <sounds name="sound">
     <sound>sound\tongue_in</sound>
     <sound>sound\tongue_out</sound>
-    <sound>sound\splash</sound>
-    <sound>sound\fire</sound>
-    <sound>sound\flowers</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_swarm_fire</sprite>
@@ -36,15 +33,15 @@
     <object>objects\obj_swarm_grass</object>
     <object>objects\obj_branch</object>
     <object>objects\obj_menu</object>
-    <object>objects\obj_menu</object>
+    <object>objects\obj_tutorial_and_credits</object>
     <object>objects\obj_final</object>
-    <object>objects\obj_final</object>
+    <object>objects\obj_select</object>
     <object>objects\obj_controllers</object>
-    <object>objects\obj_controllers</object>
+    <object>objects\obj_countdown</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
-    <room>rooms\rm_menu</room>
+    <room>rooms\rm_main</room>
     <room>rooms\rm_tutorial</room>
     <room>rooms\rm_credits</room>
     <room>rooms\rm_select</room>
