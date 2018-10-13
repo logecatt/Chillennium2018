@@ -15,6 +15,15 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <objects name="objects">
+    <object>objects\obj_eye</object>
+    <object>objects\obj_chameleon</object>
+    <object>objects\obj_tongue</object>
+    <object>objects\obj_swarm_fire</object>
+    <object>objects\obj_swarm_water</object>
+    <object>objects\obj_swarm_grass</object>
+    <object>objects\obj_branch</object>
+  </objects>
   <rooms name="rooms">
     <room>rooms\rm_main</room>
   </rooms>
