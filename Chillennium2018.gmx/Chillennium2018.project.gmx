@@ -26,6 +26,7 @@
   <objects name="objects">
     <object>objects\obj_eye</object>
     <object>objects\obj_chameleon</object>
+    <object>objects\obj_chameleon2</object>
     <object>objects\obj_tongue</object>
     <object>objects\obj_swarm</object>
     <object>objects\obj_swarm_fire</object>
@@ -39,12 +40,12 @@
     <object>objects\obj_controllers</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_final</room>
-    <room>rooms\rm_menu</room>
     <room>rooms\rm_main</room>
+    <room>rooms\rm_menu</room>
     <room>rooms\rm_tutorial</room>
     <room>rooms\rm_credits</room>
     <room>rooms\rm_select</room>
+    <room>rooms\rm_final</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
