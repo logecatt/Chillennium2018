@@ -9,6 +9,9 @@
     <sprite>sprites\spr_swarm_fire</sprite>
     <sprite>sprites\spr_swarm_water</sprite>
     <sprite>sprites\spr_swarm_grass</sprite>
+    <sprite>sprites\spr_branch</sprite>
+    <sprite>sprites\spr_chameleon</sprite>
+    <sprite>sprites\spr_tongue</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
