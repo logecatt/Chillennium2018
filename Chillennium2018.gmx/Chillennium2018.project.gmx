@@ -16,6 +16,7 @@
     <sprite>sprites\spr_chameleon</sprite>
     <sprite>sprites\spr_tongue</sprite>
     <sprite>sprites\spr_eye</sprite>
+    <sprite>sprites\spr_controller</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -34,6 +35,8 @@
     <object>objects\obj_menu</object>
     <object>objects\obj_tutorial_and_credits</object>
     <object>objects\obj_final</object>
+    <object>objects\obj_select</object>
+    <object>objects\obj_controllers</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_final</room>
@@ -41,6 +44,7 @@
     <room>rooms\rm_main</room>
     <room>rooms\rm_tutorial</room>
     <room>rooms\rm_credits</room>
+    <room>rooms\rm_select</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

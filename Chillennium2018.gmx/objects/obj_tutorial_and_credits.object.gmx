@@ -25,8 +25,36 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(gamepad_button_check(0, gp_face2)) {
-    room_goto(rm_menu);
+            <string>if(global.player1 != -1) {
+    if(gamepad_button_check(global.player1, gp_face2)) {
+        room_goto(rm_menu);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(global.player1 == -1) {
+    draw_set_halign(fa_center);
+    draw_text(room_width/2, room_height/2, "Connect Gamepad to Continue");
 }
 </string>
           </argument>
