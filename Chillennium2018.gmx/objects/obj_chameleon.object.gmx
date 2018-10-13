@@ -228,13 +228,6 @@ case obj_swarm_water:
 case obj_swarm_fire:
     image_index = 2
     head.sprite_index = spr_head_fire
-    target_image_index = 0
-    break
-case obj_swarm_water:
-    target_image_index = 1
-    break
-case obj_swarm_fire:
-    target_image_index = 2
     break
 default:
     break
