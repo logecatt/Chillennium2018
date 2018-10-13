@@ -7,7 +7,164 @@
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>p1_set = false;
+p2_set = false;
+p1_confirm = false;
+p2_confirm = false;
+var i;
+i = 0;
+repeat(10) {
+    move[i] = true;
+    i += 1;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(ds_list_size(global.gamepads) &gt; 1) {
+    for(var i = 0; i &lt; ds_list_size(global.gamepads); i++) {
+        var gamepad = ds_list_find_value(global.gamepads, i);
+        if(gamepad_axis_value(gamepad, gp_axislh) &lt; -0.2 &amp;&amp; move[gamepad]) {
+            if(gamepad != global.player2 &amp;&amp; !p1_set) {
+                global.player1 = gamepad;
+                p1_set = true;
+                move[gamepad] = false;
+            }
+            else if(gamepad == global.player2) {
+                global.player2 = -1;
+                p2_set = false;
+                move[gamepad] = false;
+            }
+        }
+        else if(gamepad_axis_value(gamepad, gp_axislh) &gt; 0.2 &amp;&amp; move[gamepad]) {
+            if(gamepad != global.player1 &amp;&amp; !p2_set) {
+                global.player2 = gamepad;
+                p2_set = true;
+                move[gamepad] = false;
+            }
+            else if(gamepad == global.player1) {
+                global.player1 = -1;
+                p1_set = false;
+                move[gamepad] = false;
+            }
+        }
+        else if(gamepad_axis_value(gamepad, gp_axislh) &lt;= 0.2 &amp;&amp; gamepad_axis_value(gamepad, gp_axislh) &gt;= -0.2){
+            move[gamepad] = true;
+        }
+        
+        if(gamepad_button_check_pressed(gamepad, gp_face1)) {
+            if(gamepad == global.player1) {
+                p1_confirm = true;
+            }
+            else if(gamepad == global.player2) {
+                p2_confirm = true;
+            }
+        }
+        
+        if(gamepad_button_check_pressed(gamepad, gp_face2)) {
+            if(gamepad == global.player1) {
+                p1_confirm = false;
+            }
+            else if(gamepad == global.player2) {
+                p2_confirm = false;
+            }
+        }
+    }
+    if(p1_confirm &amp;&amp; p2_confirm) {
+        room_goto(rm_countdown);
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(ds_list_size(global.gamepads) &gt; 1) {
+    draw_set_halign(fa_center);
+    for(var i = 0; i &lt; ds_list_size(global.gamepads); i++) {
+        var gamepad = ds_list_find_value(global.gamepads, i);
+        var dy = room_height/4 + (i * 80);
+        if(global.player1 == gamepad) {
+            draw_sprite(spr_controller, 0, room_width/3, dy);
+        }
+        else if(global.player2 == gamepad) {
+            draw_sprite(spr_controller, 0, (2 * room_width)/3, dy);
+        }
+        else {
+            draw_sprite(spr_controller, 0, room_width/2, dy);
+        }
+        if(p1_confirm &amp;&amp; global.player1 == gamepad) {
+            draw_text(room_width/3, dy + 70, "confirm");
+        }
+        if(p2_confirm &amp;&amp; global.player2 == gamepad) {
+            draw_text((2 * room_width)/3, dy + 70, "confirm");
+        }
+    }
+}
+else {
+    draw_set_halign(fa_center);
+    draw_text(room_width/2, room_height/2, "Must have at least 2 gamepads connected");
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>

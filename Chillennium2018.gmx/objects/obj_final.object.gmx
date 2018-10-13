@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>select = 0;
-gamepad = global.player1;
+gamepad = global.player;
 
 move = true;
 text1 = "restart";
@@ -53,7 +53,7 @@ text2 = "main menu";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>gamepad = global.player1;
+            <string>gamepad = global.player;
 if(gamepad != -1) {
     if(gamepad_axis_value(gamepad, gp_axislh) &gt; 0.2 &amp;&amp; move) {
         select = (select + 1) mod 2;
@@ -72,9 +72,9 @@ if(gamepad != -1) {
     
     if(gamepad_button_check_pressed(gamepad, gp_face1)) {
         switch(select) {
-        case 0: room_goto(rm_main);
+        case 0: room_goto(rm_countdown);
         break;
-        case 1: room_goto(rm_menu);
+        case 1: global.player1 = -1; global.player2 = -1; room_goto(rm_menu);
         break;
         }
     }

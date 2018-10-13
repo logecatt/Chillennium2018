@@ -25,21 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>select = 0;
-gamepad = global.player;
-
-move = true;
-text1 = "play";
-text2 = "how to";
-text3 = "credits";
-text4 = "quit";
-
+            <string>countdown = 3;
+alarm[0] = 120;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -56,35 +49,12 @@ text4 = "quit";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>gamepad = global.player;
-if(gamepad != -1) {
-    if(gamepad_axis_value(gamepad, gp_axislv) &gt; 0.2 &amp;&amp; move) {
-        select = (select + 1) mod 4;
-        move = false;
-    }
-    else if(gamepad_axis_value(gamepad, gp_axislv) &lt; -0.2 &amp;&amp; move) {
-        select = select - 1;
-        if(select &lt; 0) {
-            select = 3;
-        }
-        move = false;
-    }
-    else if(gamepad_axis_value(gamepad, gp_axislv) &gt;= -0.2 &amp;&amp; gamepad_axis_value(gamepad, gp_axislv) &lt;= 0.2) {
-        move = true;
-    }
-    
-    if(gamepad_button_check_pressed(gamepad, gp_face1)) {
-        switch(select) {
-        case 0: room_goto(rm_select);
-        break;
-        case 1: room_goto(rm_tutorial);
-        break;
-        case 2: room_goto(rm_credits);
-        break;
-        case 3: game_end();
-        break;
-        }
-    }
+            <string>if(countdown &gt; 1) {
+    countdown--;
+    alarm[0] = 120;
+}
+else {
+    room_goto(rm_main);
 }
 </string>
           </argument>
@@ -108,27 +78,7 @@ if(gamepad != -1) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(gamepad != -1) {
-    draw_set_halign(fa_center);
-    draw_text(room_width/2, room_height/2, text1);
-    draw_text(room_width/2, room_height/2 + 50, text2);
-    draw_text(room_width/2, room_height/2 + 100, text3);
-    draw_text(room_width/2, room_height/2 + 150, text4);
-    switch(select) {
-    case 0: draw_rectangle(room_width/2 - 20, room_height/2 - 5, room_width/2 + 20, room_height/2 + 20, 1);
-    break;
-    case 1: draw_rectangle(room_width/2 - 30, room_height/2 + 45, room_width/2 + 30, room_height/2 + 70, 1);
-    break;
-    case 2: draw_rectangle(room_width/2 - 30, room_height/2 + 95, room_width/2 + 30, room_height/2 + 120, 1);
-    break;
-    case 3: draw_rectangle(room_width/2 - 20, room_height/2 + 145, room_width/2 + 20, room_height/2 + 170, 1);
-    break;
-    }
-}
-else {
-    draw_set_halign(fa_center);
-    draw_text(room_width/2, room_height/2, "Connect Gamepad to Continue");
-}
+            <string>draw_text(room_width/2, room_height/2, string(countdown));
 </string>
           </argument>
         </arguments>

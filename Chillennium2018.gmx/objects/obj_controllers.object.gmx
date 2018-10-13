@@ -33,10 +33,14 @@ for (var i = 0; i &lt; gp_num; i++) {
     }
 }
 
+global.player = -1;
 global.player1 = -1;
+global.player2 = -1;
 if(ds_list_size(global.gamepads) &gt; 0) {
-    global.player1 = ds_list_find_value(global.gamepads, 0);
+    global.player = ds_list_find_value(global.gamepads, 0);
 }
+
+global.winner = -1;
 </string>
           </argument>
         </arguments>
@@ -59,17 +63,19 @@ if(ds_list_size(global.gamepads) &gt; 0) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(async_load[? "event_type"] == "gamepad discovered") {
-    ds_list_add(global.gamepads, async_load[? "pad_index"]);
-    if(global.player1 == -1) {
-        global.player1 = ds_list_find_value(global.gamepads, 0);
+            <string>if(ds_list_find_index(global.gamepads, async_load[? "pad_index"]) == -1) {
+    if(async_load[? "event_type"] == "gamepad discovered") {
+        ds_list_add(global.gamepads, async_load[? "pad_index"]);
+        if(global.player == -1) {
+            global.player = ds_list_find_value(global.gamepads, 0);
+        }
     }
 }
 else if(async_load[? "event_type"] == "gamepad lost") {
     var in = ds_list_find_index(global.gamepads, async_load[? "pad_index"]);
     ds_list_delete(global.gamepads, in);
     if(ds_list_size(global.gamepads) &lt;= 0) {
-        global.player1 = -1;
+        global.player = -1;
     }
 }
 </string>
