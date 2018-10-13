@@ -31,9 +31,14 @@
     <object>objects\obj_swarm_water</object>
     <object>objects\obj_swarm_grass</object>
     <object>objects\obj_branch</object>
+    <object>objects\obj_menu</object>
+    <object>objects\obj_tutorial_and_credits</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\rm_menu</room>
     <room>rooms\rm_main</room>
+    <room>rooms\rm_tutorial</room>
+    <room>rooms\rm_credits</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
