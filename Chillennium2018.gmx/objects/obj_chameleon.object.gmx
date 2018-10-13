@@ -28,6 +28,10 @@
             <string>image_speed = 0
 insect = noone
 
+aim_angle = 0
+image_angle = 0
+deadzone = 0.5
+
 tongue = instance_create(x, y, obj_tongue)
 eye = instance_create(x, y, obj_eye)
 </string>
@@ -52,7 +56,20 @@ eye = instance_create(x, y, obj_eye)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with tongue {
+            <string>
+var x_tilt = gamepad_axis_value(0, gp_axislh)
+var y_tilt = gamepad_axis_value(0, gp_axislv)
+
+
+if point_distance(0, 0, x_tilt, y_tilt) &gt; deadzone {
+    aim_angle = point_direction(0, 0, x_tilt, y_tilt)
+}
+
+eye.image_angle = aim_angle
+tongue.image_angle = aim_angle
+
+
+with tongue {
     insect = instance_place(x, y, obj_swarm) 
     
     if insect != noone {
