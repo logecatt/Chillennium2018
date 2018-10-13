@@ -19,6 +19,7 @@
     <object>objects\obj_swarm_fire</object>
     <object>objects\obj_swarm_water</object>
     <object>objects\obj_swarm_grass</object>
+    <object>objects\obj_branch</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_main</room>
