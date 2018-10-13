@@ -37,11 +37,11 @@
     <object>objects\obj_final</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\rm_final</room>
-    <room>rooms\rm_menu</room>
     <room>rooms\rm_main</room>
+    <room>rooms\rm_menu</room>
     <room>rooms\rm_tutorial</room>
     <room>rooms\rm_credits</room>
+    <room>rooms\rm_final</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

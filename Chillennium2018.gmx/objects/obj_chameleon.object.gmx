@@ -33,7 +33,7 @@ hit = false
 healthiness = 3
 fired = false
 can_fire = true
-aim_angle = 0
+aim_angle = 180
 fire_angle = 0
 image_angle = 0
 
@@ -51,6 +51,9 @@ target_angle = 180
 
 tongue = instance_create(x, y, obj_tongue)
 eye = instance_create(x, y, obj_eye)
+eye.image_angle = 180
+tongue.image_angle = 180
+tongue.direction = 180
 </string>
           </argument>
         </arguments>
@@ -117,6 +120,10 @@ if not fired {
                 if scr_type_wins(other.type, other.enemy.type) {
                     other.enemy.healthiness--
                     other.hit = true
+                    if other.enemy.healthiness &lt;= 0 {
+                        global.winner = other.player
+                        room_goto(rm_final)
+                    }
                 }
             }
         }
@@ -207,6 +214,7 @@ if player != 0 {
     aim_angle_max = 180 - temp
     target_angle = 0
     gamepad = 0
+    aim_angle = 180 - aim_angle
 }
 </string>
           </argument>
