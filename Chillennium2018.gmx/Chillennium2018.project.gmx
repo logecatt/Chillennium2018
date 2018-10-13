@@ -16,6 +16,9 @@
     <object>objects\obj_eye</object>
     <object>objects\obj_chameleon</object>
     <object>objects\obj_tongue</object>
+    <object>objects\obj_swarm_fire</object>
+    <object>objects\obj_swarm_water</object>
+    <object>objects\obj_swarm_grass</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_main</room>
