@@ -211,14 +211,17 @@ switch type {
 case obj_swarm_grass:
     image_index = 0
     head.sprite_index = spr_head_grass
+    eye.image_index = 0;
     break
 case obj_swarm_water:
     image_index = 1
     head.sprite_index = spr_head_water
+    eye.image_index = 1;
     break
 case obj_swarm_fire:
     image_index = 2
     head.sprite_index = spr_head_fire
+    eye.image_index = 2;
     break
 default:
     break
