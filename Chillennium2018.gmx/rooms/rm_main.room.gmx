@@ -6,7 +6,7 @@
   <vsnap>32</vsnap>
   <hsnap>32</hsnap>
   <isometric>0</isometric>
-  <speed>30</speed>
+  <speed>120</speed>
   <persistent>0</persistent>
   <colour>16744448</colour>
   <showcolour>-1</showcolour>
@@ -60,13 +60,13 @@
     <instance objName="obj_branch" x="928" y="384" name="inst_D7C12D4A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_branch" x="992" y="384" name="inst_38EE5C25" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_chameleon" x="192" y="352" name="inst_B635AC10" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_chameleon" x="768" y="352" name="inst_EECCF9A3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_swarm_fire" x="192" y="64" name="inst_3B3AC9F4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_swarm_fire" x="768" y="64" name="inst_C24C9BD1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_swarm_grass" x="160" y="480" name="inst_A2B52465" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_swarm_grass" x="768" y="480" name="inst_552D9168" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_swarm_water" x="608" y="704" name="inst_B0D87A5F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_swarm_water" x="352" y="704" name="inst_4876DE6B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_chameleon" x="768" y="352" name="inst_1DDB57BD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

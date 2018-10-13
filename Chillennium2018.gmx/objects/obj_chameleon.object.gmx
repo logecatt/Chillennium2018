@@ -28,9 +28,19 @@
             <string>image_speed = 0
 insect = noone
 
+fired = false
+can_fire = true
 aim_angle = 0
+fire_angle = 0
 image_angle = 0
-deadzone = 0.5
+
+gamepad = 0
+aim_deadzone = 0.5
+fire_deadzone = 0.5
+fire_speed = 50
+fire_distance = 600
+aim_angle_min = 135
+aim_angle_max = 240
 
 tongue = instance_create(x, y, obj_tongue)
 eye = instance_create(x, y, obj_eye)
@@ -56,24 +66,73 @@ eye = instance_create(x, y, obj_eye)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-var x_tilt = gamepad_axis_value(0, gp_axislh)
-var y_tilt = gamepad_axis_value(0, gp_axislv)
+            <string>// TODO allow prefire slightly
 
+// determine aim angle
+var x_tilt = gamepad_axis_value(gamepad, gp_axislh)
+var y_tilt = gamepad_axis_value(gamepad, gp_axislv)
 
-if point_distance(0, 0, x_tilt, y_tilt) &gt; deadzone {
-    aim_angle = point_direction(0, 0, x_tilt, y_tilt)
+if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
+    var new_angle = point_direction(0, 0, x_tilt, y_tilt)
+    if new_angle &gt; aim_angle_min and new_angle &lt; aim_angle_max {
+        aim_angle = new_angle
+    }
 }
-
 eye.image_angle = aim_angle
-tongue.image_angle = aim_angle
-
-
-with tongue {
-    insect = instance_place(x, y, obj_swarm) 
     
-    if insect != noone {
-        show_debug_message(object_get_name(insect.object_index))
+if not fired {
+    tongue.direction = aim_angle
+    tongue.image_angle = aim_angle
+
+    // tongue fire
+    var trigger_val = gamepad_button_value(gamepad, gp_shoulderlb)
+    if trigger_val &gt; fire_deadzone {
+        if can_fire {
+            fired = true
+            can_fire = false
+            fire_angle = aim_angle
+            tongue.speed = fire_speed
+        }
+    } else {
+        can_fire = true
+    }
+} else {
+    // tongue collision
+    if not instance_exists(insect) {
+        with tongue {
+            other.insect = instance_place(x, y, obj_swarm)
+        }
+    }
+
+    // check tongue distance
+    var distance = point_distance(x, y, tongue.x, tongue.y)
+    if distance &gt; fire_distance {
+        // return
+        tongue.speed = -fire_speed
+    } else if abs(fire_angle - point_direction(x, y, tongue.x, tongue.y)) &gt; 0.1 {
+        // stop
+        tongue.speed = 0
+        tongue.x = x
+        tongue.y = y
+        fired = false
+        if instance_exists(insect) {
+            type = insect.object_index
+            insect = noone
+            
+            switch type {
+            case obj_swarm_grass:
+                image_index = 0
+                break
+            case obj_swarm_water:
+                image_index = 1
+                break
+            case obj_swarm_fire:
+                image_index = 2
+                break
+            default:
+                break
+            }
+        }
     }
 }
 </string>
