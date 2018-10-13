@@ -8,6 +8,11 @@
   <sprites name="sprites"/>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <objects name="objects">
+    <object>objects\obj_eye</object>
+    <object>objects\obj_chameleon</object>
+    <object>objects\obj_tongue</object>
+  </objects>
   <rooms name="rooms">
     <room>rooms\rm_main</room>
   </rooms>
