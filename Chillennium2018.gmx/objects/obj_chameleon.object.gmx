@@ -118,17 +118,28 @@ if not fired {
     // collision with insect
     if not hit {
         if not instance_exists(insect) {
+            // valid hit occurred
             with tongue {
                 other.insect = instance_place(x, y, obj_swarm)
-                
-                if instance_exists(other.insect) {
-                    other.type = other.insect.object_index
-                }
             }
             if instance_exists(insect) {
                 hit = true
-                
+                type = insect.object_index
                 insect = noone
+                
+                switch type {
+                case obj_swarm_grass:
+                    audio_play_sound(snd_flowers, 10, false)
+                    break
+                case obj_swarm_water:
+                    audio_play_sound(snd_splash, 10, false)
+                    break
+                case obj_swarm_fire:
+                    audio_play_sound(snd_fire, 10, false)
+                    break
+                default:
+                    break
+                }
             }
         }
         
@@ -168,6 +179,8 @@ if not fired {
         tongue.y = tongue.start_y
         fired = false
         hit = false
+        
+        audio_play_sound(snd_tongue_in, 10, false)
         //if instance_exists(insect) {
         //    type = insect.object_index
         //    insect = noone
@@ -197,6 +210,8 @@ if trigger_val &gt; fire_deadzone {
         can_fire = false
         fire_angle = aim_angle
         tongue.speed = fire_speed
+        
+        audio_play_sound(snd_tongue_out, 10, false)
     }
 } else {
     if fired {
