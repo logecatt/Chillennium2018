@@ -12,6 +12,7 @@
     <sprite>sprites\spr_branch</sprite>
     <sprite>sprites\spr_chameleon</sprite>
     <sprite>sprites\spr_tongue</sprite>
+    <sprite>sprites\spr_eye</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
