@@ -73,6 +73,11 @@ global.winner = -1;
 }
 else if(async_load[? "event_type"] == "gamepad lost") {
     var in = ds_list_find_index(global.gamepads, async_load[? "pad_index"]);
+    if((in == global.player1 || in == global.player2) &amp;&amp; room == rm_main) {
+        global.player1 = -1;
+        global.player2 = -1;
+        room_goto(rm_menu);
+    }
     ds_list_delete(global.gamepads, in);
     if(ds_list_size(global.gamepads) &lt;= 0) {
         global.player = -1;
