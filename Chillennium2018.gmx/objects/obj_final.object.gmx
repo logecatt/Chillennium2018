@@ -72,10 +72,14 @@ if(gamepad != -1) {
     
     if(gamepad_button_check_pressed(gamepad, gp_face1)) {
         switch(select) {
-        case 0: room_goto(rm_countdown);
-        break;
-        case 1: global.player1 = -1; global.player2 = -1; room_goto(rm_menu);
-        break;
+        case 0: 
+            room_goto(rm_countdown);
+            break;
+        case 1: 
+            global.player1 = -1; 
+            global.player2 = -1; 
+            room_goto(rm_menu);
+            break;
         }
     }
 }
@@ -103,10 +107,9 @@ if(gamepad != -1) {
             <kind>1</kind>
             <string>if(gamepad != -1) {
     draw_set_halign(fa_center);
-    if(global.winner == 1) {
+    if(global.winner == global.player1) {
         draw_text(room_width/2, room_height/2 - 50, "Player 1 Wins!");
-    }
-    else {
+    } else {
         draw_text(room_width/2, room_height/2 - 50, "Player 2 Wins!");
     }
     draw_text(room_width/2 - 50, room_height/2, text1);
@@ -117,8 +120,7 @@ if(gamepad != -1) {
     case 1: draw_rectangle(room_width/2 + 5, room_height/2 - 5, room_width/2 + 80, room_height/2 + 20, 1);
     break;
     }
-}
-else {
+} else {
     draw_set_halign(fa_center);
     draw_text(room_width/2, room_height/2, "Connect Gamepad to Continue");
 }
