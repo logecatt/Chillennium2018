@@ -27,9 +27,15 @@
             <kind>1</kind>
             <string>rec_x1 = 600;
 rec_y1 = 256;
-rec_x2 = 1250;
-rec_y2 = 770;
-dest_x = irandom_range(rec_x1, rec_x2);
+rec_x3 = 1250;
+rec_y3 = 770;
+rec_x2 = rec_x3 - (rec_x3 - rec_x1)/2;
+rec_y2 = rec_y3 - (rec_y3 - rec_y1)/2;
+left = 0;
+right = 0;
+top = 0;
+bottom = 0;
+dest_x = irandom_range(rec_x1, rec_x3);
 dest_y = irandom_range(rec_y1, rec_y2);
 x = dest_x;
 y = dest_y;
@@ -81,11 +87,36 @@ move = true;
           <argument>
             <kind>1</kind>
             <string>if(move) {
-    if(point_distance(x, y, dest_x, dest_y) &lt; 8) {
+    if(point_distance(x, y, dest_x, dest_y) &lt; 16) {
+        if(left - right &lt; -3) {
+            ran_x1 = rec_x1;
+            ran_x2 = rec_x2;
+        } else if(left - right &gt; 3) {
+            ran_x1 = rec_x2;
+            ran_x2 = rec_x3;
+        } else {
+            ran_x1 = rec_x1;
+            ran_x2 = rec_x3;
+        }
+        if(top - bottom &lt; -3) {
+            ran_y1 = rec_y1;
+            ran_y2 = rec_y2;
+        } else if(top - bottom &gt; 3) {
+            ran_y1 = rec_y2;
+            ran_y2 = rec_y3;
+        } else {
+            ran_y1 = rec_y1;
+            ran_y2 = rec_y3;
+        }
         do {
-        dest_x = irandom_range(rec_x1, rec_x2);
-        dest_y = irandom_range(rec_y1, rec_y2);
-        } until (point_distance(x, y, dest_x, dest_y) &lt;= 300);
+            dest_x = irandom_range(ran_x1, ran_x2);
+            dest_y = irandom_range(ran_y1, ran_y2);
+        } until (dest_y &lt; 320 || dest_y &gt; 420);
+        if(dest_x &gt;= rec_x2) {
+            right++;
+        } else {
+            left++;
+        }
     }
     dir = point_direction(x, y, dest_x, dest_y);
     cspd = min(spd, point_distance(x, y, dest_y, dest_y));

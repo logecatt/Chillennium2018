@@ -69,6 +69,7 @@ repeat(10) {
             else if(gamepad == global.player2) {
                 global.player2 = -1;
                 p2_set = false;
+                p2_confirm = false;
                 move[gamepad] = false;
             }
         }
@@ -81,6 +82,7 @@ repeat(10) {
             else if(gamepad == global.player1) {
                 global.player1 = -1;
                 p1_set = false;
+                p1_confirm = false;
                 move[gamepad] = false;
             }
         }
