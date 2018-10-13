@@ -152,6 +152,8 @@ if not fired {
                     other.hit = true
                     other.enemy.type = other.type
                     
+                    audio_play_sound(snd_punch, 10, false)
+                    
                     if other.enemy.healthiness &lt;= 0 {
                         global.winner = other.gamepad
                         room_goto(rm_final)
