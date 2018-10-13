@@ -53,8 +53,10 @@ eye = instance_create(x, y, obj_eye)
           <argument>
             <kind>1</kind>
             <string>with tongue {
-    if place_meeting(x, y, obj_swarm) {
-        insect = other
+    insect = instance_place(x, y, obj_swarm) 
+    
+    if insect != noone {
+        show_debug_message(object_get_name(insect.object_index))
     }
 }
 </string>
