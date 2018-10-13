@@ -2,10 +2,10 @@
 <sound>
   <kind>0</kind>
   <extension>.wav</extension>
-  <origname>sound\audio\tongue_in.wav</origname>
+  <origname>sound\audio\snd_tongue_out.wav</origname>
   <effects>0</effects>
   <volume>
-    <volume>0.09</volume>
+    <volume>0.1</volume>
   </volume>
   <pan>0</pan>
   <bitRates>
@@ -21,7 +21,7 @@
     <bitDepth>16</bitDepth>
   </bitDepths>
   <preload>-1</preload>
-  <data>tongue_in.wav</data>
+  <data>snd_tongue_out.wav</data>
   <compressed>0</compressed>
   <streamed>0</streamed>
   <uncompressOnLoad>0</uncompressOnLoad>
