@@ -37,11 +37,11 @@ aim_angle = 0
 fire_angle = 0
 image_angle = 0
 
-gamepad = 0
+gamepad = 4
 aim_deadzone = 0.5
 fire_deadzone = 0.5
-fire_speed = 50
-fire_distance = 600
+fire_speed = 100
+fire_distance = 1200
 aim_angle_min = 135
 aim_angle_max = 240
 
