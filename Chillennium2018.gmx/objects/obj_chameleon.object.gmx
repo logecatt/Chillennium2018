@@ -56,7 +56,7 @@ if x &gt; room_width/2 {
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
-fire_speed = 80
+fire_speed = 60
 target_lock_angle = 6.75
 
 tongue = instance_create(tongue_x, y, obj_tongue)
