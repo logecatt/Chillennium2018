@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>select = 0;
 gamepad = global.player;
+window_set_cursor(cr_none);
 
 move = true;
 text1 = "play";
