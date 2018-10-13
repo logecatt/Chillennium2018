@@ -42,9 +42,7 @@ var eye_x = x
 
 aim_angle_min = 135
 aim_angle_max = 240
-aim_angle_min_buffer = 85
-aim_angle_max_buffer = 275
-if x &gt; room_width / 2 {
+if x &gt; room_width/2 {
     gamepad = global.player2;
     image_xscale = -1;
     x -= sprite_get_xoffset(sprite_index);
@@ -57,16 +55,11 @@ if x &gt; room_width / 2 {
     target_angle = 180 - target_angle
     aim_angle_min = 180 - aim_angle_min
     aim_angle_max = 540 - aim_angle_max
-    aim_angle_min_buffer = 180 - aim_angle_min
-    aim_angle_max_buffer = 540 - aim_angle_max
-    tongue_x += sprite_width
-    eye_x += sprite_width
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 50
 target_lock_angle = 6.75
-transition_speed = 0.05
 
 var eye_offset_x = 60;
 var eye_offset_y = -12;
@@ -118,13 +111,13 @@ if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
     if(gamepad == global.player2) {
         if new_angle &gt; aim_angle_min and new_angle &lt; aim_angle_max {
             aim_angle = new_angle
-        } else if new_angle &gt; aim_angle_min_buffer and new_angle &lt; aim_angle_max_buffer {
+        } else {
             aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
         }
     } else {
         if new_angle &lt; aim_angle_min or new_angle &gt; aim_angle_max {
             aim_angle = new_angle
-        } else if new_angle &lt; aim_angle_min_buffer or new_angle &gt; aim_angle_max_buffer {
+        } else {
             aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
         }
     }
@@ -178,8 +171,6 @@ if not fired {
                     other.hit = true
                     other.enemy.type = other.type
                     
-                    audio_play_sound(snd_punch, 10, false)
-                    
                     if other.enemy.healthiness &lt;= 0 {
                         global.winner = other.gamepad
                         room_goto(rm_final)
@@ -231,15 +222,6 @@ case obj_swarm_fire:
     break
 default:
     break
-}
-
-if image_index != target_image_index {
-    var transition_dir = sign(target_image_index - image_index)
-    image_index = image_index - transition_dir * transition_speed
-    var new_transition_dir = sign(target_image_index - image_index)
-    if (transition_dir != new_transition_dir) {
-        image_index = target_image_index
-    }
 }
 
 // tongue fire
