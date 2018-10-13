@@ -5,7 +5,11 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\spr_swarm_fire</sprite>
+    <sprite>sprites\spr_swarm_water</sprite>
+    <sprite>sprites\spr_swarm_grass</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <rooms name="rooms">
