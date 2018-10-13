@@ -11,6 +11,7 @@
     <sound>sound\snd_flowers</sound>
     <sound>sound\snd_splash</sound>
     <sound>sound\snd_punch</sound>
+    <sound>sound\snd_poison</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_swarm_fire</sprite>
