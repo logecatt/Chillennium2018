@@ -91,6 +91,29 @@ if(gamepad != -1) {
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>audio_play_sound(snd_winner, 10, false);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -110,13 +133,15 @@ if(gamepad != -1) {
             <kind>1</kind>
             <string>if(gamepad != -1) {
     draw_set_halign(fa_center);
+    draw_set_font(fnt_title);
     if(global.winner == global.player1) {
-        draw_text(room_width/2, room_height/2 - 100, "Player 1 Wins!");
+        draw_text(room_width/2, room_height/2 - 250, "Player 1 Wins!");
     } else {
-        draw_text(room_width/2, room_height/2 - 100, "Player 2 Wins!");
+        draw_text(room_width/2, room_height/2 - 250, "Player 2 Wins!");
     }
-    draw_text(room_width/2 - 150, room_height/2, text1);
-    draw_text(room_width/2 + 150, room_height/2, text2);
+    draw_set_font(fnt_text);
+    draw_text(room_width/2, room_height/2, text1);
+    draw_text(room_width/2, room_height/2 + 100, text2);
     switch(select) {
     case 0: draw_rectangle(room_width/2 - 80, room_height/2 - 5, room_width/2 - 5, room_height/2 + 20, 1);
     break;

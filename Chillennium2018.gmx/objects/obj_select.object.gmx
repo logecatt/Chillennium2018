@@ -62,23 +62,27 @@ repeat(10) {
         var gamepad = ds_list_find_value(global.gamepads, i);
         if(gamepad_axis_value(gamepad, gp_axislh) &lt; -0.5 &amp;&amp; move[gamepad]) {
             if(gamepad != global.player2 &amp;&amp; !p1_set) {
+                audio_play_sound(snd_menu_move, 10, false);
                 global.player1 = gamepad;
                 p1_set = true;
                 move[gamepad] = false;
             }
             else if(gamepad == global.player2 &amp;&amp; !p2_confirm) {
                 global.player2 = -1;
+                audio_play_sound(snd_menu_move, 10, false);
                 p2_set = false;
                 move[gamepad] = false;
             }
         }
         else if(gamepad_axis_value(gamepad, gp_axislh) &gt; 0.5 &amp;&amp; move[gamepad]) {
             if(gamepad != global.player1 &amp;&amp; !p2_set) {
+                audio_play_sound(snd_menu_move, 10, false);
                 global.player2 = gamepad;
                 p2_set = true;
                 move[gamepad] = false;
             }
             else if(gamepad == global.player1 &amp;&amp; !p1_confirm) {
+                audio_play_sound(snd_menu_move, 10, false);
                 global.player1 = -1;
                 p1_set = false;
                 move[gamepad] = false;
@@ -89,6 +93,7 @@ repeat(10) {
         }
         
         if(gamepad_button_check_pressed(gamepad, gp_face1)) {
+            audio_play_sound(snd_tongue_out, 10, false);
             if(gamepad == global.player1) {
                 p1_confirm = true;
             }
