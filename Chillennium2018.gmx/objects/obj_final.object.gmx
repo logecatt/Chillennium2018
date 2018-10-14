@@ -167,9 +167,9 @@ if(gamepad != -1) {
     draw_set_halign(fa_center);
     draw_set_font(fnt_title);
     if(global.winner == global.player1) {
-        draw_text_outlined(room_width/2, room_height/2 - 250, 3, c_black, c_white, "Player 1 Wins!");
+        draw_text_outlined(room_width/2, room_height/2 - 250, 4, c_black, c_white, "Player 1 Wins!");
     } else {
-        draw_text_outlined(room_width/2, room_height/2 - 250, 3, c_black, c_white, "Player 2 Wins!");
+        draw_text_outlined(room_width/2, room_height/2 - 250, 4, c_black, c_white, "Player 2 Wins!");
     }
     draw_set_font(fnt_text);
     draw_text_outlined(room_width/2, room_height/2, 3, c_black, c_white, text1);

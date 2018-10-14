@@ -6,20 +6,21 @@
   <colkind>1</colkind>
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
-  <bboxmode>0</bboxmode>
-  <bbox_left>0</bbox_left>
-  <bbox_right>127</bbox_right>
-  <bbox_top>0</bbox_top>
-  <bbox_bottom>255</bbox_bottom>
+  <bboxmode>2</bboxmode>
+  <bbox_left>9</bbox_left>
+  <bbox_right>329</bbox_right>
+  <bbox_top>124</bbox_top>
+  <bbox_bottom>347</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>128</width>
-  <height>256</height>
+  <width>350</width>
+  <height>375</height>
   <frames>
     <frame index="0">images\spr_swarm_grass_0.png</frame>
+    <frame index="1">images\spr_swarm_grass_1.png</frame>
   </frames>
 </sprite>
