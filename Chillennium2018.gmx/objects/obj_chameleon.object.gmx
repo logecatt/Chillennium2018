@@ -197,22 +197,6 @@ if not fired {
             }
         }
         
-        // collision with poison
-        with tongue {
-            if place_meeting(x, y, obj_poison) {
-                // determine if a valid hit occurred
-                other.healthiness--
-                other.hit = true
-                
-                audio_play_sound(snd_poison, 10, false)
-                
-                if other.healthiness &lt;= 0 {
-                    global.winner = other.enemy.gamepad
-                    room_goto(rm_final)
-                }
-            }
-        }
-        
         // collision with enemy
         with tongue {
             if place_meeting(x, y, other.enemy.eye) {

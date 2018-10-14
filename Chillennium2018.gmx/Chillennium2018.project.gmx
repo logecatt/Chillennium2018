@@ -29,6 +29,9 @@
     <sprite>sprites\spr_head_fire</sprite>
     <sprite>sprites\spr_head_grass</sprite>
     <sprite>sprites\spr_head_water</sprite>
+    <sprite>sprites\spr_firefly</sprite>
+    <sprite>sprites\spr_grasshopper</sprite>
+    <sprite>sprites\spr_mudskipper</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -39,6 +42,7 @@
   <objects name="objects">
     <object>objects\obj_eye</object>
     <object>objects\obj_chameleon</object>
+    <object>objects\obj_head</object>
     <object>objects\obj_tongue</object>
     <object>objects\obj_swarm</object>
     <object>objects\obj_swarm_fire</object>
@@ -51,8 +55,10 @@
     <object>objects\obj_select</object>
     <object>objects\obj_controllers</object>
     <object>objects\obj_countdown</object>
-    <object>objects\obj_poison</object>
-    <object>objects\obj_head</object>
+    <object>objects\obj_bug</object>
+    <object>objects\obj_firefly</object>
+    <object>objects\obj_grasshopper</object>
+    <object>objects\obj_mudskipper</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
