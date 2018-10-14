@@ -246,7 +246,7 @@ if not fired and not biting and not bite_stun{
             if instance_exists(insect) {
                 hit = true
                 type = insect.object_index
-                insect = noone
+                //insect = noone
                 
                 switch type {
                 case obj_swarm_grass:
@@ -304,6 +304,7 @@ if not fired and not biting and not bite_stun{
         fired = false
         hit = false
         fire_stun = false;
+        insect = noone;
         
         //audio_play_sound(snd_tongue_in, 10, false)
         //if instance_exists(insect) {
@@ -499,6 +500,21 @@ draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset,
 draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
 draw_text(x, y - 100, string(healthiness))
 
+if (instance_exists(insect)){
+    switch(insect.object_index){
+        case obj_swarm_fire:
+            draw_sprite_ext(spr_firefly, 0, tongue.x, tongue.y, 1, 1, tongue.direction+90, c_white, 1);
+            break;
+        case obj_swarm_water:
+            draw_sprite_ext(spr_mudskipper, 0, tongue.x, tongue.y, 1, 1, tongue.direction+90, c_white, 1);
+            break;
+        case obj_swarm_grass:
+            draw_sprite_ext(spr_grasshopper, 0, tongue.x, tongue.y, 1, 1, tongue.direction+90, c_white, 1);
+            break;
+        default:
+            break;
+    }
+}
 
 </string>
           </argument>
