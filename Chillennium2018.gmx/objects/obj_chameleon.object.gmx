@@ -321,7 +321,7 @@ if not fired and not biting and not bite_stun{
         hit = false
         fire_stun = false;
         
-        audio_play_sound(snd_tongue_in, 10, false)
+        //audio_play_sound(snd_tongue_in, 10, false)
         //if instance_exists(insect) {
         //    type = insect.object_index
         //    insect = noone
