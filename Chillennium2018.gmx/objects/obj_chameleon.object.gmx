@@ -258,6 +258,7 @@ bite_success = false;
                 if instance_exists(insect) {
                     hit = true
                     type = insect.object_index
+                    event_user(0);
                     //insect = noone
                     
                     switch type {
@@ -292,6 +293,7 @@ bite_success = false;
                         }
                         other.hit = true
                         other.enemy.type = other.type
+                        event_user(0);
                         audio_play_sound(snd_punch, 10, false);
                         
                         if other.enemy.healthiness &lt;= 0 {
