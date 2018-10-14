@@ -29,7 +29,6 @@
 image_angle = 0
 insect = noone
 
-type = obj_swarm_grass
 hit = false
 healthiness = 3
 fired = false
@@ -64,7 +63,7 @@ if x &gt; room_width/2 {
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 20
-target_lock_angle = 7.5
+target_lock_angle = 8
 fade_speed = 0.1
 head_scale = 0.4
 head_fire_speed = 1.5
@@ -95,13 +94,14 @@ if(gamepad == global.player2) {
     head.image_angle += 180;
 }
 
+
 eye.x += eye_offset_x;
 eye.y += eye_offset_y
 
 stun_eye_speed = 6;
 
 bite_speed = 1.25
-bite_success_range = 550;
+bite_success_range = 320;
 bite_success = false;
 biting = false;
 stun_multiplier = 0.33;
@@ -222,7 +222,7 @@ if not fired and not biting and not bite_stun{
         if enemy.target_angle == enemy.fire_angle and 
                 point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range and 
                 abs(angle_difference(target_angle, fire_angle)) &lt;= 10 and
-                enemy.tongue.speed &gt; 0 and 
+                //enemy.tongue.speed &gt; 0 and 
                 not enemy.hit {
             bite_success = true;
             enemy.fire_stun = true;
@@ -457,6 +457,29 @@ with obj_chameleon {
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>randomize();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -479,6 +502,10 @@ draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_ysca
 draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
 draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
 draw_text(x, y - 100, string(healthiness))
+
+draw_circle(head.x, head.y, 5, 5)
+draw_circle(tongue.x, tongue.y, 5, 5)
+
 </string>
           </argument>
         </arguments>

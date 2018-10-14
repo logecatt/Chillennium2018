@@ -10,7 +10,23 @@
   <persistent>0</persistent>
   <colour>16744448</colour>
   <showcolour>-1</showcolour>
-  <code></code>
+  <code>var ind = irandom(2)
+with obj_chameleon {
+    switch(ind){
+        case 0: 
+            type = obj_swarm_fire; 
+            head.prev_sprite_index = spr_head_fire
+            break;
+        case 1: 
+            type = obj_swarm_water; 
+            head.prev_sprite_index = spr_head_water
+            break;
+        case 2: 
+            type = obj_swarm_grass; 
+            head.prev_sprite_index = spr_head_grass
+            break;
+    }
+}</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
