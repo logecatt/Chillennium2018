@@ -317,12 +317,14 @@ var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
 if trigger_val &gt; fire_deadzone {
     if can_fire and not fired {
         head.image_speed = head_fire_speed;    
+        head.image_angle = aim_angle
     
         fired = true
         can_fire = false
         fire_angle = aim_angle
         tongue.speed = fire_speed
-        head.image_angle = aim_angle;
+        tongue.direction = aim_angle
+        tongue.image_angle = aim_angle
         
         audio_play_sound(snd_tongue_out, 10, false)
     }
