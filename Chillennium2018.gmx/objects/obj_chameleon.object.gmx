@@ -63,7 +63,7 @@ if x &gt; room_width/2 {
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 20
-target_lock_angle = 8
+target_lock_angle = 10
 fade_speed = 0.1
 head_scale = 0.4
 head_fire_speed = 1.5
@@ -225,10 +225,12 @@ if not fired and not biting and not bite_stun{
                 //enemy.tongue.speed &gt; 0 and 
                 not enemy.hit {
             bite_success = true;
+            audio_play_sound(snd_bite_succ, 10, false);
             enemy.fire_stun = true;
             alarm[0] = room_speed * .25;
         } else {
             bite_stun = true;
+            audio_play_sound(snd_eye_roll, 10, false);
             alarm[1] = room_speed;
         }
     }
@@ -248,13 +250,13 @@ if not fired and not biting and not bite_stun{
                 
                 switch type {
                 case obj_swarm_grass:
-                    audio_play_sound(snd_flowers, 10, false)
+                    //audio_play_sound(snd_flowers, 10, false)
                     break
                 case obj_swarm_water:
-                    audio_play_sound(snd_splash, 10, false)
+                    //audio_play_sound(snd_splash, 10, false)
                     break
                 case obj_swarm_fire:
-                    audio_play_sound(snd_fire, 10, false)
+                    //audio_play_sound(snd_fire, 10, false)
                     break
                 default:
                     break
@@ -287,6 +289,7 @@ if not fired and not biting and not bite_stun{
                     other.enemy.healthiness--
                     other.hit = true
                     other.enemy.type = other.type
+                    audio_play_sound(snd_punch, 10, false);
                     
                     if other.enemy.healthiness &lt;= 0 {
                         global.winner = other.gamepad
@@ -503,8 +506,6 @@ draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset,
 draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
 draw_text(x, y - 100, string(healthiness))
 
-draw_circle(head.x, head.y, 5, 5)
-draw_circle(tongue.x, tongue.y, 5, 5)
 
 </string>
           </argument>
