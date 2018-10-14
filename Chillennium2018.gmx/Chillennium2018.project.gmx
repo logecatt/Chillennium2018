@@ -37,6 +37,10 @@
     <script>scripts\scr_type_wins.gml</script>
     <script>scripts\scr_clamp_angle.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt_title</font>
+    <font>fonts\fnt_text</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_eye</object>
     <object>objects\obj_chameleon</object>

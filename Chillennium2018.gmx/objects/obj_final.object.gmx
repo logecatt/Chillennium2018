@@ -73,7 +73,7 @@ if(gamepad != -1) {
     }
     
     if(gamepad_button_check_pressed(gamepad, gp_face1)) {
-        audio_play_sound(snd_menu_sel, 10, false);
+        audio_play_sound(snd_tongue_out, 10, false);
         switch(select) {
         case 0: 
             room_goto(rm_countdown);
@@ -111,12 +111,12 @@ if(gamepad != -1) {
             <string>if(gamepad != -1) {
     draw_set_halign(fa_center);
     if(global.winner == global.player1) {
-        draw_text(room_width/2, room_height/2 - 50, "Player 1 Wins!");
+        draw_text(room_width/2, room_height/2 - 100, "Player 1 Wins!");
     } else {
-        draw_text(room_width/2, room_height/2 - 50, "Player 2 Wins!");
+        draw_text(room_width/2, room_height/2 - 100, "Player 2 Wins!");
     }
-    draw_text(room_width/2 - 50, room_height/2, text1);
-    draw_text(room_width/2 + 50, room_height/2, text2);
+    draw_text(room_width/2 - 150, room_height/2, text1);
+    draw_text(room_width/2 + 150, room_height/2, text2);
     switch(select) {
     case 0: draw_rectangle(room_width/2 - 80, room_height/2 - 5, room_width/2 - 5, room_height/2 + 20, 1);
     break;
