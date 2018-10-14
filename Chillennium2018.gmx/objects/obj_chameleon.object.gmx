@@ -37,8 +37,11 @@ can_fire = true
 aim_angle = 180
 fire_angle = 180
 target_angle = 180
+target_image_index = 0
+prev_image_index = 0
 var tongue_x = x
 var eye_x = x
+target_image_alpha = 1.0
 
 aim_angle_min = 135
 aim_angle_max = 240
@@ -55,11 +58,14 @@ if x &gt; room_width/2 {
     target_angle = 180 - target_angle
     aim_angle_min = 180 - aim_angle_min
     aim_angle_max = 540 - aim_angle_max
+    aim_angle_min_buffer = 180 - aim_angle_min
+    aim_angle_max_buffer = 540 - aim_angle_max
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 50
 target_lock_angle = 7.5
+fade_speed = 0.1
 
 var eye_offset_x = 60;
 var eye_offset_y = -12;
@@ -162,6 +168,22 @@ if not fired {
             }
         }
         
+        // collision with poison
+        with tongue {
+            if place_meeting(x, y, obj_poison) {
+                // determine if a valid hit occurred
+                other.healthiness--
+                other.hit = true
+                
+                audio_play_sound(snd_punch, 10, false)
+                
+                if other.healthiness &lt;= 0 {
+                    global.winner = other.enemy.gamepad
+                    room_goto(rm_final)
+                }
+            }
+        }
+        
         // collision with enemy
         with tongue {
             if place_meeting(x, y, other.enemy.eye) {
@@ -208,6 +230,7 @@ if not fired {
     }
 }
             
+// type switching
 switch type {
 case obj_swarm_grass:
     image_index = 0
@@ -226,6 +249,18 @@ case obj_swarm_fire:
     break
 default:
     break
+}
+
+if target_image_index != prev_image_index and target_image_alpha == 1.0 {
+    target_image_alpha = 0.0
+}
+
+if target_image_alpha &lt; 1.0 {
+    target_image_alpha += fade_speed;
+} 
+if target_image_alpha &gt;= 1.0 {
+    target_image_alpha = 1.0
+    prev_image_index = target_image_index
 }
 
 // tongue fire
@@ -307,7 +342,8 @@ with obj_chameleon {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self()
+            <string>draw_sprite(sprite_index, prev_image_index, x, y)
+draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
 draw_text(x, y - 100, string(healthiness))
 </string>
           </argument>
