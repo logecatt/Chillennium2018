@@ -18,6 +18,7 @@
     <sound>sound\snd_menu_sel</sound>
     <sound>sound\snd_countdown</sound>
     <sound>sound\snd_winner</sound>
+    <sound>sound\snd_chroma_music</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_swarm_fire</sprite>
@@ -33,7 +34,9 @@
     <sprite>sprites\spr_head_grass</sprite>
     <sprite>sprites\spr_head_water</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bkg_game</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\scr_type_wins.gml</script>

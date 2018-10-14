@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>countdown = 3;
+global.started = false;
 alarm[0] = room_speed;
 </string>
           </argument>
@@ -54,7 +55,8 @@ alarm[0] = room_speed;
     alarm[0] = room_speed;
 }
 else {
-    room_goto(rm_main);
+    global.started = true;
+    instance_destroy();
 }
 </string>
           </argument>

@@ -76,7 +76,7 @@ if(gamepad != -1) {
         audio_play_sound(snd_tongue_out, 10, false);
         switch(select) {
         case 0: 
-            room_goto(rm_countdown);
+            room_goto(rm_main);
             break;
         case 1: 
             global.player1 = -1; 

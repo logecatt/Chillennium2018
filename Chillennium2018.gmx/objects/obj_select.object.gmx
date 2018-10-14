@@ -94,12 +94,15 @@ repeat(10) {
         
         if(gamepad_button_check_pressed(gamepad, gp_face1)) {
             audio_play_sound(snd_tongue_out, 10, false);
+            if(p1_confirm &amp;&amp; p2_confirm) {
+                room_goto(rm_main);
+            }
             if(gamepad == global.player1) {
                 p1_confirm = true;
             }
             else if(gamepad == global.player2) {
                 p2_confirm = true;
-            }
+            } 
         }
         
         if(gamepad_button_check_pressed(gamepad, gp_face2)) {
@@ -110,9 +113,6 @@ repeat(10) {
                 p2_confirm = false;
             }
         }
-    }
-    if(p1_confirm &amp;&amp; p2_confirm) {
-        room_goto(rm_countdown);
     }
 }
 
@@ -162,11 +162,14 @@ if(gamepad_button_check_pressed(global.player, gp_face2)) {
         if(p2_confirm &amp;&amp; global.player2 == gamepad) {
             draw_text((2 * room_width)/3, dy + 70, "confirm");
         }
+        if(p1_confirm &amp;&amp; p2_confirm) {
+            draw_text(room_width/2, room_height/2, "Press A to Start!");
+        }
     }
 }
 else {
     draw_set_halign(fa_center);
-    draw_text(room_width/2, room_height/2, "Must have at least 2 gamepads connected");
+    draw_text(room_width/2, room_height/2, "Connect 2 gamepads to continue!");
 }
 </string>
           </argument>
