@@ -12,6 +12,9 @@
     <sound>sound\snd_splash</sound>
     <sound>sound\snd_punch</sound>
     <sound>sound\snd_poison</sound>
+    <sound>sound\snd_bite_succ</sound>
+    <sound>sound\snd_eye_roll</sound>
+    <sound>sound\snd_menu_move</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_swarm_fire</sprite>
