@@ -165,6 +165,8 @@ if(gamepad_button_check_pressed(global.player, gp_face2)) {
         }
         if(p1_confirm &amp;&amp; p2_confirm) {
             draw_text_outlined(room_width/2, room_height/2, 3, c_black, c_white, "Press A to Start!");
+        } else {
+            draw_text_outlined(room_width/2, room_height/2, 3, c_black, c_white, "Press A to Confirm!");
         }
     }
 }
