@@ -52,6 +52,7 @@
   </views>
   <instances>
     <instance objName="obj_tutorial_and_credits" x="128" y="384" name="inst_67CF0D10" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_help_attacker" x="128" y="288" name="inst_73B58ADA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

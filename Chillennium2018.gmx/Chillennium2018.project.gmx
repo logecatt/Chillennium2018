@@ -15,6 +15,9 @@
     <sound>sound\snd_bite_succ</sound>
     <sound>sound\snd_eye_roll</sound>
     <sound>sound\snd_menu_move</sound>
+    <sound>sound\snd_menu_sel</sound>
+    <sound>sound\snd_countdown</sound>
+    <sound>sound\snd_winner</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_swarm_fire</sprite>
@@ -59,6 +62,8 @@
     <object>objects\obj_firefly</object>
     <object>objects\obj_grasshopper</object>
     <object>objects\obj_mudskipper</object>
+    <object>objects\obj_simple_chameleon</object>
+    <object>objects\obj_help_attacker</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
