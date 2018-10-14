@@ -56,10 +56,12 @@ text2 = "main menu";
             <string>gamepad = global.player;
 if(gamepad != -1) {
     if(gamepad_axis_value(gamepad, gp_axislh) &gt; 0.2 &amp;&amp; move) {
+        audio_play_sound(snd_menu_move, 10, false);
         select = (select + 1) mod 2;
         move = false;
     }
     else if(gamepad_axis_value(gamepad, gp_axislh) &lt; -0.2 &amp;&amp; move) {
+        audio_play_sound(snd_menu_move, 10, false);
         select = select - 1;
         if(select &lt; 0) {
             select = 1;
@@ -71,6 +73,7 @@ if(gamepad != -1) {
     }
     
     if(gamepad_button_check_pressed(gamepad, gp_face1)) {
+        audio_play_sound(snd_menu_sel, 10, false);
         switch(select) {
         case 0: 
             room_goto(rm_countdown);
