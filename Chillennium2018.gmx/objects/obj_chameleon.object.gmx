@@ -69,11 +69,17 @@ fade_speed = 0.1
 
 var eye_offset_x = 60;
 var eye_offset_y = -12;
+var eye_offset_open_x = -20;
+var eye_offset_open_y = -10;
 if(gamepad == global.player2) {
     eye_offset_x *= -1;
+    eye_offset_open_x *= -1;
 }
-eye_dir = point_direction(x, y, x + eye_offset_x, y + eye_offset_y);
-eye_dist = point_distance(x, y, x + eye_offset_x, y + eye_offset_y);
+eye_dir = point_direction(0, 0, eye_offset_x, eye_offset_y);
+eye_dist = point_distance(0, 0, eye_offset_x, eye_offset_y);
+
+eye_open_dir = point_direction(0, 0, eye_offset_open_x, eye_offset_open_y);
+eye_open_dist = point_distance(0, 0, eye_offset_open_x, eye_offset_open_y);
 
 head = instance_create(x, y, obj_head);
 tongue = instance_create(tongue_x, y, obj_tongue)
@@ -274,14 +280,6 @@ if trigger_val &gt; fire_deadzone {
         fire_angle = aim_angle
         tongue.speed = fire_speed
         head.image_angle = aim_angle;
-        var new_eye_dir = head.image_angle + eye_dir;
-        if(gamepad == global.player2) {
-            new_eye_dir += 180;
-        }
-        var x_off = lengthdir_x(eye_dist, new_eye_dir);
-        var y_off = lengthdir_y(eye_dist, new_eye_dir);
-        eye.x = head.x + x_off;
-        eye.y = head.y + y_off;
         
         audio_play_sound(snd_tongue_out, 10, false)
     }
@@ -292,6 +290,26 @@ if trigger_val &gt; fire_deadzone {
     }
     can_fire = true
 }
+
+var new_eye_dir = head.image_angle + eye_dir;
+if(gamepad == global.player2) {
+    new_eye_dir += 180;
+}
+var x_off = lengthdir_x(eye_dist, new_eye_dir);
+var y_off = lengthdir_y(eye_dist, new_eye_dir);
+
+var new_eye_open_dir = head.image_angle + new_eye_dir;
+if(gamepad == global.player2) {
+    new_eye_open_dir += 180;
+}
+var x_open_off = lengthdir_x(eye_open_dist, new_eye_open_dir);
+var y_open_off = lengthdir_y(eye_open_dist, new_eye_open_dir);
+
+var eye_closed_x = head.x + x_off;
+var eye_closed_y = head.y + y_off;
+var alpha = head.image_index/head.image_number;
+eye.x = lerp(eye_closed_x, head.x + x_open_off, alpha);
+eye.y = lerp(eye_closed_y, head.y + y_open_off, alpha);
 </string>
           </argument>
         </arguments>

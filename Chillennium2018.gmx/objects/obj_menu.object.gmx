@@ -59,18 +59,18 @@ text4 = "quit";
             <kind>1</kind>
             <string>gamepad = global.player;
 if(gamepad != -1) {
-    if(gamepad_axis_value(gamepad, gp_axislv) &gt; 0.2 &amp;&amp; move) {
+    if(gamepad_axis_value(gamepad, gp_axislv) &gt; 0.5 &amp;&amp; move) {
         select = (select + 1) mod 4;
         move = false;
     }
-    else if(gamepad_axis_value(gamepad, gp_axislv) &lt; -0.2 &amp;&amp; move) {
+    else if(gamepad_axis_value(gamepad, gp_axislv) &lt; -0.5 &amp;&amp; move) {
         select = select - 1;
         if(select &lt; 0) {
             select = 3;
         }
         move = false;
     }
-    else if(gamepad_axis_value(gamepad, gp_axislv) &gt;= -0.2 &amp;&amp; gamepad_axis_value(gamepad, gp_axislv) &lt;= 0.2) {
+    else if(gamepad_axis_value(gamepad, gp_axislv) &gt;= -0.5 &amp;&amp; gamepad_axis_value(gamepad, gp_axislv) &lt;= 0.5) {
         move = true;
     }
     
