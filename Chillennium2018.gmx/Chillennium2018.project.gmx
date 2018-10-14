@@ -44,6 +44,7 @@
   <scripts name="scripts">
     <script>scripts\scr_type_wins.gml</script>
     <script>scripts\scr_clamp_angle.gml</script>
+    <script>scripts\draw_text_outlined.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_title</font>

@@ -495,13 +495,7 @@ with obj_chameleon {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, prev_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
-draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
-draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
-draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
-draw_text(x, y - 100, string(healthiness))
-
-if (instance_exists(insect)){
+            <string>if (instance_exists(insect)){
     switch(insect.object_index){
         case obj_swarm_fire:
             draw_sprite_ext(spr_firefly, 0, tongue.x, tongue.y, 1, 1, tongue.direction+90, c_white, 1);
@@ -516,6 +510,14 @@ if (instance_exists(insect)){
             break;
     }
 }
+
+
+draw_sprite_ext(sprite_index, prev_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
+draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
+draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
+draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
+draw_text(x, y - 100, string(healthiness))
+
 
 </string>
           </argument>
