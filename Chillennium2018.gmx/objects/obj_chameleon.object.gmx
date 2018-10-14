@@ -59,7 +59,7 @@ if x &gt; room_width/2 {
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 50
-target_lock_angle = 6.75
+target_lock_angle = 7.5
 
 var eye_offset_x = 60;
 var eye_offset_y = -12;
@@ -192,6 +192,7 @@ if not fired {
         tongue.length = tongue.sprite_width
     } else if abs(fire_angle - point_direction(tongue.start_x, tongue.start_y, tongue.x, tongue.y)) &gt; 0.1 {
         // stop
+        head.image_speed = -.5;
         tongue.speed = 0
         tongue.length = 0
         tongue.x = tongue.start_x
@@ -231,6 +232,8 @@ default:
 var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
 if trigger_val &gt; fire_deadzone {
     if can_fire and not fired {
+        head.image_speed = .5;    
+    
         fired = true
         can_fire = false
         fire_angle = aim_angle
