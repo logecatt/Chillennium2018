@@ -152,16 +152,10 @@ if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
 }
 eye.image_angle = aim_angle    
 
-if not fired and not biting {
+if not fired {
     tongue.direction = aim_angle
     tongue.image_angle = aim_angle
-    if(gamepad_button_check_pressed(gamepad, gp_shoulderlb)) {
-        biting = true;
-        if(enemy.target_angle == enemy.fire_angle &amp;&amp; point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range &amp;&amp; angle_difference(aim_angle, fire_angle) &lt;= 10) {
-            bite_success = true;
-        }
-    }
-} else if fired{
+} else {
     // tongue collision
     // collision with insect
     if not hit {
@@ -252,26 +246,6 @@ if not fired and not biting {
         //    insect = noone
         //}
     }
-} else if biting {
-    if(bite_open) {
-        head.image_speed = 0.5;
-        bite_open = false;
-        bite_down = true;
-    }
-    if(bite_down &amp;&amp; head.image_speed == 0) {
-        bite_down = false;
-        head.image_speed = -0.5;
-    }
-    if(!bite_down &amp;&amp; head.image_speed == 0) {
-        biting = false;
-    }
-    if(bite_success) {
-        
-        
-    } else {
-        
-        
-    }
 }
             
 // type switching
@@ -348,10 +322,14 @@ eye.x = head.x + lerp(x_off, x_open_off, alpha);
 eye.y = head.y + lerp(y_off, y_open_off, alpha);
 
 var head_offset = head_scale * alpha * 60
-head_xoffset = lengthdir_x(head_offset, head.image_angle + 90)
-head_yoffset = lengthdir_y(head_offset, head.image_angle + 90);
+var up = 90
+if gamepad == global.player2 {
+    up = -90
+}
+head_xoffset = lengthdir_x(head_offset, head.image_angle + up)
+head_yoffset = lengthdir_y(head_offset, head.image_angle + up)
 head.image_xscale = 1 + head_scale * alpha
-head.image_yscale = sign(head.image_yscale) * 1 + head_scale * alpha
+head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
 eye.image_xscale = 1 + head_scale * alpha
 eye.image_yscale = 1 + head_scale * alpha
 </string>
