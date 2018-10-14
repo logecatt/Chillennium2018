@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>start_x = x
 start_y = y
+image_speed = 0;
 
 length = 0
 

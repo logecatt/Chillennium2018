@@ -36,6 +36,7 @@
     <sprite>sprites\spr_firefly</sprite>
     <sprite>sprites\spr_grasshopper</sprite>
     <sprite>sprites\spr_mudskipper</sprite>
+    <sprite>sprites\spr_heart</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_game</background>
@@ -72,6 +73,7 @@
     <object>objects\obj_mudskipper</object>
     <object>objects\obj_simple_chameleon</object>
     <object>objects\obj_help_attacker</object>
+    <object>objects\obj_heart</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
