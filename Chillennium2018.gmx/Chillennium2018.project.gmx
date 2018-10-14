@@ -36,6 +36,8 @@
     <sprite>sprites\spr_firefly</sprite>
     <sprite>sprites\spr_grasshopper</sprite>
     <sprite>sprites\spr_mudskipper</sprite>
+    <sprite>sprites\spr_heart</sprite>
+    <sprite>sprites\spr_howto</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_game</background>
@@ -61,7 +63,8 @@
     <object>objects\obj_swarm_grass</object>
     <object>objects\obj_branch</object>
     <object>objects\obj_menu</object>
-    <object>objects\obj_tutorial_and_credits</object>
+    <object>objects\obj_credits</object>
+    <object>objects\obj_howto</object>
     <object>objects\obj_final</object>
     <object>objects\obj_select</object>
     <object>objects\obj_controllers</object>
@@ -72,6 +75,7 @@
     <object>objects\obj_mudskipper</object>
     <object>objects\obj_simple_chameleon</object>
     <object>objects\obj_help_attacker</object>
+    <object>objects\obj_heart</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>

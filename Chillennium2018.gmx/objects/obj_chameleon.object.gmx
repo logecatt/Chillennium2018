@@ -63,7 +63,7 @@ if x &gt; room_width/2 {
 aim_deadzone = 0.5
 fire_deadzone = 0.5
 fire_speed = 20
-target_lock_angle = 10
+target_lock_angle = 12.5
 fade_speed = 0.1
 head_scale = 0.4
 head_fire_speed = 1.5
@@ -109,6 +109,16 @@ stun_multiplier = 0.33;
 fire_stun = false;
 // You played yourself
 bite_stun = false;
+
+if(gamepad == global.player1) {
+    hp1 = instance_create(x - 470, y - 190, obj_heart);
+    hp2 = instance_create(x - 400, y - 220, obj_heart);
+    hp3 = instance_create(x - 330, y - 250, obj_heart);
+} else {
+    hp1 = instance_create(x + 380, y - 250, obj_heart);
+    hp2 = instance_create(x + 450, y - 220, obj_heart);
+    hp3 = instance_create(x + 520, y - 190, obj_heart);
+}
 </string>
           </argument>
         </arguments>
@@ -228,6 +238,7 @@ bite_success = false;
                 bite_success = true;
                 audio_play_sound(snd_bite_succ, 10, false);
                 enemy.fire_stun = true;
+                enemy.tongue.image_index++;
                 alarm[0] = room_speed * .25;
             } else {
                 bite_stun = true;
@@ -273,6 +284,13 @@ bite_success = false;
                     // determine if a valid hit occurred
                     if scr_type_wins(other.type, other.enemy.type) and not other.fire_stun {
                         other.enemy.healthiness--
+                        if(instance_exists(other.enemy.hp1)) {
+                            instance_destroy(other.enemy.hp1);
+                        } else if(instance_exists(other.enemy.hp2)) {
+                            instance_destroy(other.enemy.hp2);
+                        } else if(instance_exists(other.enemy.hp3)) {
+                            instance_destroy(other.enemy.hp3);
+                        }
                         other.hit = true
                         other.enemy.type = other.type
                         event_user(0);
@@ -304,6 +322,7 @@ bite_success = false;
             tongue.length = 0
             tongue.x = tongue.start_x
             tongue.y = tongue.start_y
+            if(tongue.image_index &gt; 0) tongue.image_index = 0;
             fired = false
             hit = false
             fire_stun = false;
@@ -518,7 +537,6 @@ draw_sprite_ext(sprite_index, prev_image_index, x, y, image_xscale, image_yscale
 draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
 draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
 draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
-draw_text(x, y - 100, string(healthiness))
 
 
 </string>

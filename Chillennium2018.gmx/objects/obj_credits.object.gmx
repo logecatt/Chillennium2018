@@ -55,6 +55,15 @@
             <string>if(global.player == -1) {
     draw_set_halign(fa_center);
     draw_text_outlined(room_width/2, room_height/2, 3, c_black, c_white, "Connect Gamepad to Continue");
+} else {
+    draw_set_font(fnt_title);
+    draw_text_outlined(room_width/2, room_height/4 - 100, 3, c_black, c_white, "Thanks for Playing!");
+    draw_set_font(fnt_text);
+    draw_text_outlined(room_width/2, room_height/4 + 150, 3, c_black, c_white, "Created By:");
+    draw_text_outlined(room_width/2, room_height/4 + 260, 3, c_black, c_white, "Matt Engman");
+    draw_text_outlined(room_width/2, room_height/4 + 370, 3, c_black, c_white, "Ford Hash");
+    draw_text_outlined(room_width/2, room_height/4 + 480, 3, c_black, c_white, "Dylan Hines");
+    draw_text_outlined(room_width/2, room_height/4 + 580, 3, c_black, c_white, "Logan Parmeter");
 }
 </string>
           </argument>
