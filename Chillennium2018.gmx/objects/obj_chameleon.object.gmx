@@ -66,11 +66,13 @@ fire_deadzone = 0.5
 fire_speed = 50
 target_lock_angle = 7.5
 fade_speed = 0.1
+head_scale = 0.4
+head_fire_speed = 1.5
 
 var eye_offset_x = 60;
 var eye_offset_y = -12;
-var eye_offset_open_x = -20;
-var eye_offset_open_y = -10;
+var eye_offset_open_x = 60;
+var eye_offset_open_y = -60;
 if(gamepad == global.player2) {
     eye_offset_x *= -1;
     eye_offset_open_x *= -1;
@@ -80,6 +82,9 @@ eye_dist = point_distance(0, 0, eye_offset_x, eye_offset_y);
 
 eye_open_dir = point_direction(0, 0, eye_offset_open_x, eye_offset_open_y);
 eye_open_dist = point_distance(0, 0, eye_offset_open_x, eye_offset_open_y);
+
+head_xoffset = 0
+head_yoffset = 0
 
 head = instance_create(x, y, obj_head);
 tongue = instance_create(tongue_x, y, obj_tongue)
@@ -271,7 +276,7 @@ if target_image_alpha &gt;= 1.0 {
 var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
 if trigger_val &gt; fire_deadzone {
     if can_fire and not fired {
-        head.image_speed = .5;    
+        head.image_speed = head_fire_speed;    
     
         fired = true
         can_fire = false
@@ -296,18 +301,24 @@ if(gamepad == global.player2) {
 var x_off = lengthdir_x(eye_dist, new_eye_dir);
 var y_off = lengthdir_y(eye_dist, new_eye_dir);
 
-var new_eye_open_dir = head.image_angle + new_eye_dir;
+var new_eye_open_dir = head.image_angle + eye_open_dir;
 if(gamepad == global.player2) {
     new_eye_open_dir += 180;
 }
 var x_open_off = lengthdir_x(eye_open_dist, new_eye_open_dir);
 var y_open_off = lengthdir_y(eye_open_dist, new_eye_open_dir);
 
-var eye_closed_x = head.x + x_off;
-var eye_closed_y = head.y + y_off;
-var alpha = head.image_index/head.image_number;
-eye.x = lerp(eye_closed_x, head.x + x_open_off, alpha);
-eye.y = lerp(eye_closed_y, head.y + y_open_off, alpha);
+var alpha = head.image_index / sprite_get_number(head.target_sprite_index);
+eye.x = head.x + lerp(x_off, x_open_off, alpha);
+eye.y = head.y + lerp(y_off, y_open_off, alpha);
+
+var head_offset = head_scale * alpha * 60
+head_xoffset = lengthdir_x(head_offset, head.image_angle + 90)
+head_yoffset = lengthdir_y(head_offset, head.image_angle + 90);
+head.image_xscale = 1 + head_scale * alpha
+head.image_yscale = sign(head.image_yscale) * 1 + head_scale * alpha
+eye.image_xscale = 1 + head_scale * alpha
+eye.image_yscale = 1 + head_scale * alpha
 </string>
           </argument>
         </arguments>
@@ -360,8 +371,8 @@ with obj_chameleon {
             <kind>1</kind>
             <string>draw_sprite_ext(sprite_index, prev_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
 draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
-draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x, head.y, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
-draw_sprite_ext(head.target_sprite_index, head.image_index, head.x, head.y, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
+draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
+draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
 draw_text(x, y - 100, string(healthiness))
 </string>
           </argument>
