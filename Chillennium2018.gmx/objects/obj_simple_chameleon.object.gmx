@@ -3,7 +3,7 @@
   <spriteName>spr_chameleon</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,7 +25,43 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0
+            <string>image_scale = 0.3;
+image_xscale = image_scale;
+image_yscale = image_scale;
+image_speed = 0
+
+if(instance_exists(obj_menu)) {
+    with(obj_menu) {
+        other.x = room_width/3 + 120;
+        switch(select) {
+        case 0:
+            other.y = y1 + 40;
+            break;
+        case 1:
+            other.y = y2 + 40;
+            break;
+        case 2:
+            other.y = y3 + 40;
+            break;
+        case 3:
+            other.y = y4 + 40;
+            break;
+        }
+    }
+} else if(instance_exists(obj_final)) {
+    with(obj_final) {
+        other.x = room_width/3 + 120;
+        switch(select) {
+        case 0:
+            other.y = y1 + 40;
+            break;
+        case 1:
+            other.y = y2 + 40;
+            break;
+        }
+    }
+}
+type = obj_swarm_grass;
 
 insect = noone
 hit = false
@@ -46,10 +82,10 @@ fade_speed = 0.1
 head_scale = 0.4
 head_fire_speed = 1.5
 
-var eye_offset_x = 60;
-var eye_offset_y = -12;
-var eye_offset_open_x = 60;
-var eye_offset_open_y = -60;
+var eye_offset_x = 60 * image_scale;
+var eye_offset_y = -12 * image_scale;
+var eye_offset_open_x = 60 * image_scale;
+var eye_offset_open_y = -100 * image_scale;
 eye_dir = point_direction(0, 0, eye_offset_x, eye_offset_y);
 eye_dist = point_distance(0, 0, eye_offset_x, eye_offset_y);
 
@@ -60,8 +96,14 @@ head_xoffset = 0
 head_yoffset = 0
 
 head = instance_create(x, y, obj_head);
+head.image_xscale = image_scale;
+head.image_yscale = image_scale;
 tongue = instance_create(x, y, obj_tongue)
+tongue.image_xscale = image_scale * 2;
+tongue.image_yscale = image_scale * 2;
 eye = instance_create(x, y, obj_eye)
+eye.image_xscale = image_scale;
+eye.image_yscale = image_scale;
 
 eye.x += eye_offset_x;
 eye.y += eye_offset_y
@@ -79,6 +121,35 @@ should_hit = false
 enemy_type = noone
 enemy_eye = noone
 loop_time = 2
+
+head.prev_sprite_index = spr_head_grass
+head.target_sprite_index = spr_head_grass
+target_image_index = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_destroy(head);
+instance_destroy(tongue);
+instance_destroy(eye);
 </string>
           </argument>
         </arguments>
@@ -175,6 +246,35 @@ if(gamepad_button_check_pressed(global.player, gp_face1)) {
     fire_ready = true;
 }
 
+/*with(obj_menu) {
+    switch(select) {
+    case 0: 
+        other.y = y1 + 10;
+        other.eye.y = y1 + 10;
+        other.head.y = y1 + 10;
+        other.tongue.y = y1 + 10;
+        break;
+    case 1: 
+        other.y = y2 + 10;
+        other.eye.y = y2 + 10;
+        other.head.y = y2 + 10;
+        other.tongue.y = y2 + 10;
+        break;
+    case 2: 
+        other.y = y3 + 10;
+        other.eye.y = y3 + 10;
+        other.head.y = y3 + 10;
+        other.tongue.y = y2 + 10;
+        break;
+    case 3: 
+        other.y = y4 + 10;
+        other.eye.y = y4 + 10;
+        other.head.y = y4 + 10;
+        other.tongue.y = y2 + 10;
+        break;
+    }
+}
+*/
 if bite_ready {
     biting = true;
     head.image_speed = bite_speed;
@@ -311,10 +411,10 @@ var head_offset = head_scale * alpha * 60
 var up = 90
 head_xoffset = lengthdir_x(head_offset, head.image_angle + up)
 head_yoffset = lengthdir_y(head_offset, head.image_angle + up);
-head.image_xscale = 1 + head_scale * alpha
-head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
-eye.image_xscale = 1 + head_scale * alpha
-eye.image_yscale = 1 + head_scale * alpha
+head.image_xscale = (1 + head_scale * alpha) * image_scale;
+head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha) * image_scale;
+eye.image_xscale = (1 + head_scale * alpha) * image_scale;
+eye.image_yscale = (1 + head_scale * alpha) * image_scale;
 
 </string>
           </argument>

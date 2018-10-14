@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -35,6 +35,44 @@ text2 = "how to";
 text3 = "credits";
 text4 = "quit";
 
+y1 = room_height/2 + 50;
+y2 = room_height/2 + 140;
+y3 = room_height/2 + 230;
+y4 = room_height/2 + 320;
+
+instance_create(x, y, obj_simple_chameleon);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>switch(select) {
+case 0: room_goto(rm_select);
+        break;
+case 1: room_goto(rm_tutorial);
+        break;
+case 2: room_goto(rm_credits);
+        break;
+case 3: game_end();
+        break;
+}
 </string>
           </argument>
         </arguments>
@@ -62,6 +100,8 @@ if(gamepad != -1) {
     if(gamepad_axis_value(gamepad, gp_axislv) &gt; 0.5 &amp;&amp; move) {
         audio_play_sound(snd_menu_move, 10, false);
         select = (select + 1) mod 4;
+        instance_destroy(obj_simple_chameleon);
+        instance_create(x, y, obj_simple_chameleon);
         move = false;
     }
     else if(gamepad_axis_value(gamepad, gp_axislv) &lt; -0.5 &amp;&amp; move) {
@@ -71,6 +111,8 @@ if(gamepad != -1) {
             select = 3;
         }
         move = false;
+        instance_destroy(obj_simple_chameleon);
+        instance_create(x, y, obj_simple_chameleon);
     }
     else if(gamepad_axis_value(gamepad, gp_axislv) &gt;= -0.5 &amp;&amp; gamepad_axis_value(gamepad, gp_axislv) &lt;= 0.5) {
         move = true;
@@ -78,16 +120,7 @@ if(gamepad != -1) {
     
     if(gamepad_button_check_pressed(gamepad, gp_face1)) {
         audio_play_sound(snd_tongue_out, 10, false);
-        switch(select) {
-        case 0: room_goto(rm_select);
-        break;
-        case 1: room_goto(rm_tutorial);
-        break;
-        case 2: room_goto(rm_credits);
-        break;
-        case 3: game_end();
-        break;
-        }
+        alarm[0] = room_speed * 0.6;
     }
 }
 </string>
@@ -121,20 +154,10 @@ draw_text_outlined(room_width/2, room_height/8 + 140, 4, c_black, c_white, "Cham
 draw_set_font(fnt_text);
 if(gamepad != -1) {
     draw_set_halign(fa_center);
-    draw_text_outlined(room_width/2, room_height/2 + 50, 3, c_black, c_white, text1);
-    draw_text_outlined(room_width/2, room_height/2 + 140, 3, c_black, c_white, text2);
-    draw_text_outlined(room_width/2, room_height/2 + 230, 3, c_black, c_white, text3);
-    draw_text_outlined(room_width/2, room_height/2 + 320, 3, c_black, c_white, text4);
-    switch(select) {
-    case 0: draw_rectangle(room_width/2 - 75, room_height/2 + 50, room_width/2 + 75, room_height/2 + 130, 1);
-    break;
-    case 1: draw_rectangle(room_width/2 - 100, room_height/2 + 45, room_width/2 + 100, room_height/2 + 70, 1);
-    break;
-    case 2: draw_rectangle(room_width/2 - 100, room_height/2 + 95, room_width/2 + 100, room_height/2 + 120, 1);
-    break;
-    case 3: draw_rectangle(room_width/2 - 75, room_height/2 + 145, room_width/2 + 75, room_height/2 + 170, 1);
-    break;
-    }
+    draw_text_outlined(room_width/2, y1, 3, c_black, c_white, text1);
+    draw_text_outlined(room_width/2, y2, 3, c_black, c_white, text2);
+    draw_text_outlined(room_width/2, y3, 3, c_black, c_white, text3);
+    draw_text_outlined(room_width/2, y4, 3, c_black, c_white, text4);
 }
 else {
     draw_set_halign(fa_center);
