@@ -63,7 +63,7 @@ if x &gt; room_width/2 {
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
-fire_speed = 50
+fire_speed = 20
 target_lock_angle = 7.5
 fade_speed = 0.1
 head_scale = 0.4
@@ -98,14 +98,40 @@ if(gamepad == global.player2) {
 eye.x += eye_offset_x;
 eye.y += eye_offset_y
 
+stun_eye_speed = 6;
+
 bite_speed = 1.25
-bite_success_range = 150;
+bite_success_range = 550;
 bite_success = false;
-bite_fail = false;
 biting = false;
-bite_open = true;
-bite_down = false;
 stun_multiplier = 0.33;
+// Enemy stunned you
+fire_stun = false;
+// You played yourself
+bite_stun = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>bite_stun = false;
 </string>
           </argument>
         </arguments>
@@ -129,6 +155,7 @@ stun_multiplier = 0.33;
           <argument>
             <kind>1</kind>
             <string>enemy.tongue.speed = -enemy.fire_speed * stun_multiplier;
+bite_success = false;
 </string>
           </argument>
         </arguments>
@@ -175,19 +202,34 @@ if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
         aim_angle = target_angle
     }
 }
-eye.image_angle = aim_angle    
 
-if not fired and not biting{
+if(bite_stun) {
+    eye.image_angle = eye.image_angle + stun_eye_speed;
+}
+else {
+    eye.image_angle = aim_angle    
+}
+
+if not fired and not biting and not bite_stun{
     tongue.direction = aim_angle
     tongue.image_angle = aim_angle
-    if(gamepad_button_check_pressed(gamepad, gp_shoulderlb)) {
+    // TODO trigger threshold
+    if(gamepad_button_check_pressed(gamepad, gp_shoulderlb)){
         biting = true;
-        if(enemy.target_angle == enemy.fire_angle) {
-            if(point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range) {
-                if(angle_difference(aim_angle, fire_angle) &lt;= 10) {
-                    bite_success = true;
-                }
-            }
+        fire_angle = aim_angle;
+        head.image_speed = bite_speed;   
+        head.image_angle = aim_angle;
+        if enemy.target_angle == enemy.fire_angle and 
+                point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range and 
+                abs(angle_difference(target_angle, fire_angle)) &lt;= 10 and
+                enemy.tongue.speed &gt; 0 and 
+                not enemy.hit {
+            bite_success = true;
+            enemy.fire_stun = true;
+            alarm[0] = room_speed * .25;
+        } else {
+            bite_stun = true;
+            alarm[1] = room_speed;
         }
     }
 } else if fired {
@@ -241,7 +283,7 @@ if not fired and not biting{
         with tongue {
             if place_meeting(x, y, other.enemy.eye) {
                 // determine if a valid hit occurred
-                if scr_type_wins(other.type, other.enemy.type) {
+                if scr_type_wins(other.type, other.enemy.type) and not other.fire_stun {
                     other.enemy.healthiness--
                     other.hit = true
                     other.enemy.type = other.type
@@ -267,13 +309,14 @@ if not fired and not biting{
         tongue.length = tongue.sprite_width
     } else if abs(fire_angle - point_direction(tongue.start_x, tongue.start_y, tongue.x, tongue.y)) &gt; 0.1 {
         // stop
-        head.image_speed = -.5;
+        head.image_speed = -1.5;
         tongue.speed = 0
         tongue.length = 0
         tongue.x = tongue.start_x
         tongue.y = tongue.start_y
         fired = false
         hit = false
+        fire_stun = false;
         
         audio_play_sound(snd_tongue_in, 10, false)
         //if instance_exists(insect) {
@@ -282,27 +325,17 @@ if not fired and not biting{
         //}
     }
 } else if biting {
-    if(bite_open) {
-        head.image_speed = bite_speed;
-        bite_open = false;
-        bite_down = true;
-    }
-    if(bite_down &amp;&amp; head.image_speed == 0) {
-        bite_down = false;
+    if head.image_index + head.image_speed &gt;= sprite_get_number(head.target_sprite_index) {
         head.image_speed = -bite_speed;
     }
-    if(!bite_down &amp;&amp; head.image_speed == 0) {
+    
+    if head.image_index + head.image_speed &lt; 0 {
+        head.image_speed = 0
         biting = false;
-        bite_open = true;
     }
-    if(bite_success) {
+    if (bite_success) {
         enemy.tongue.x = head.x;
-        enemy.tongue.y = head.y;
-        alarm[0] = room_speed * 0.2;
-        bite_success = false;
-    } else if(bite_fail) {
-        alarm[1] = room_speed;
-        bite_fail = false;
+        enemy.tongue.speed = 0;
     }
 }
             
@@ -340,7 +373,7 @@ if target_image_alpha &gt;= 1.0 {
 // tongue fire
 var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
 if trigger_val &gt; fire_deadzone {
-    if can_fire and not fired {
+    if can_fire and not fired and not fire_stun and not bite_stun{
         head.image_speed = head_fire_speed;    
         head.image_angle = aim_angle
     
@@ -353,7 +386,7 @@ if trigger_val &gt; fire_deadzone {
         
         audio_play_sound(snd_tongue_out, 10, false)
     }
-} else {
+} else if not fire_stun {
     if fired {
         // return
         tongue.speed = -fire_speed
@@ -390,6 +423,7 @@ head.image_xscale = 1 + head_scale * alpha
 head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
 eye.image_xscale = 1 + head_scale * alpha
 eye.image_yscale = 1 + head_scale * alpha
+
 </string>
           </argument>
         </arguments>
