@@ -408,8 +408,17 @@ head_xoffset = lengthdir_x(head_offset, head.image_angle + up)
 head_yoffset = lengthdir_y(head_offset, head.image_angle + up)
 head.image_xscale = 1 + head_scale * alpha
 head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
-eye.image_xscale = 1 + head_scale * alpha
-eye.image_yscale = 1 + head_scale * alpha
+if(enemy.bite_success) {
+    eye.image_xscale += 0.03
+    eye.image_yscale += 0.03
+} else if (eye.image_xscale &gt; 1 + head_scale * alpha){
+    eye.image_xscale -= 0.03
+    eye.image_yscale -= 0.03
+} else {
+    eye.image_xscale = 1 + head_scale * alpha
+    eye.image_yscale = 1 + head_scale * alpha
+}
+
 
 </string>
           </argument>
