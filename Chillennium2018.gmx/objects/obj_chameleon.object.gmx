@@ -181,7 +181,7 @@ if not fired {
                 other.healthiness--
                 other.hit = true
                 
-                audio_play_sound(snd_punch, 10, false)
+                audio_play_sound(snd_poison, 10, false)
                 
                 if other.healthiness &lt;= 0 {
                     global.winner = other.enemy.gamepad
@@ -239,19 +239,16 @@ if not fired {
 // type switching
 switch type {
 case obj_swarm_grass:
-    image_index = 0
-    head.sprite_index = spr_head_grass
-    eye.image_index = 0;
+    target_image_index = 0
+    head.target_sprite_index = spr_head_grass
     break
 case obj_swarm_water:
-    image_index = 1
-    head.sprite_index = spr_head_water
-    eye.image_index = 1;
+    target_image_index = 1
+    head.target_sprite_index = spr_head_water
     break
 case obj_swarm_fire:
-    image_index = 2
-    head.sprite_index = spr_head_fire
-    eye.image_index = 2;
+    target_image_index = 2
+    head.target_sprite_index = spr_head_fire
     break
 default:
     break
@@ -267,6 +264,7 @@ if target_image_alpha &lt; 1.0 {
 if target_image_alpha &gt;= 1.0 {
     target_image_alpha = 1.0
     prev_image_index = target_image_index
+    head.prev_sprite_index = head.target_sprite_index
 }
 
 // tongue fire
@@ -360,8 +358,10 @@ with obj_chameleon {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprite_index, prev_image_index, x, y)
+            <string>draw_sprite_ext(sprite_index, prev_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha)
 draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
+draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x, head.y, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
+draw_sprite_ext(head.target_sprite_index, head.image_index, head.x, head.y, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
 draw_text(x, y - 100, string(healthiness))
 </string>
           </argument>
