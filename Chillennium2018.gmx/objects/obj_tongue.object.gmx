@@ -78,7 +78,7 @@ rot_yoffset = cos(degtorad(image_angle)) * sprite_yoffset
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_general(sprite_index, image_index, sprite_width - length, 0, sprite_width, sprite_height, start_x - rot_xoffset, start_y - rot_yoffset, image_xscale, image_yscale, image_angle, image_blend, image_blend, image_blend, image_blend, image_alpha)
+            <string>draw_sprite_general(sprite_index, image_index, sprite_width - length, 0, length, sprite_height, start_x - rot_xoffset, start_y - rot_yoffset, image_xscale, image_yscale, image_angle, image_blend, image_blend, image_blend, image_blend, image_alpha)
 </string>
           </argument>
         </arguments>
