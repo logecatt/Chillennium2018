@@ -84,29 +84,6 @@ loop_time = 2
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="3">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>fire_ready = true
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="2" enumb="2">
       <action>
         <libid>1</libid>
@@ -194,6 +171,10 @@ loop_time = 2
           <argument>
             <kind>1</kind>
             <string>
+if(gamepad_button_check_pressed(global.player, gp_face1)) {
+    fire_ready = true;
+}
+
 if bite_ready {
     biting = true;
     head.image_speed = bite_speed;
@@ -312,7 +293,6 @@ if fire_ready {
     tongue.speed = fire_speed
     
     fire_ready = false
-    alarm[3] = room_speed * loop_time
 }
 
 var new_eye_dir = head.image_angle + eye_dir;

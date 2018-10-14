@@ -178,248 +178,249 @@ bite_success = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// determine aim angle
-var x_tilt = gamepad_axis_value(gamepad, gp_axislh)
-var y_tilt = gamepad_axis_value(gamepad, gp_axislv)
-
-if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
-    var new_angle = point_direction(0, 0, x_tilt, y_tilt)
-    if(gamepad == global.player2) {
-        if new_angle &gt; aim_angle_min and new_angle &lt; aim_angle_max {
-            aim_angle = new_angle
-        } else {
-            aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
-        }
-    } else {
-        if new_angle &lt; aim_angle_min or new_angle &gt; aim_angle_max {
-            aim_angle = new_angle
-        } else {
-            aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
-        }
-    }
+            <string>if(global.started) {
+    // determine aim angle
+    var x_tilt = gamepad_axis_value(gamepad, gp_axislh)
+    var y_tilt = gamepad_axis_value(gamepad, gp_axislv)
     
-    if abs(angle_difference(aim_angle, target_angle)) &lt; target_lock_angle {
-        aim_angle = target_angle
-    }
-}
-
-if(bite_stun) {
-    eye.image_angle = eye.image_angle + stun_eye_speed;
-}
-else {
-    eye.image_angle = aim_angle    
-}
-
-if not fired and not biting and not bite_stun{
-    tongue.direction = aim_angle
-    tongue.image_angle = aim_angle
-    // TODO trigger threshold
-    if(gamepad_button_check_pressed(gamepad, gp_shoulderlb)){
-        biting = true;
-        fire_angle = aim_angle;
-        head.image_speed = bite_speed;   
-        head.image_angle = aim_angle;
-        if enemy.target_angle == enemy.fire_angle and 
-                point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range and 
-                abs(angle_difference(target_angle, fire_angle)) &lt;= 10 and
-                //enemy.tongue.speed &gt; 0 and 
-                not enemy.hit {
-            bite_success = true;
-            audio_play_sound(snd_bite_succ, 10, false);
-            enemy.fire_stun = true;
-            alarm[0] = room_speed * .25;
-        } else {
-            bite_stun = true;
-            audio_play_sound(snd_eye_roll, 10, false);
-            alarm[1] = room_speed;
-        }
-    }
-} else if fired {
-    // tongue collision
-    // collision with insect
-    if not hit {
-        if not instance_exists(insect) {
-            // valid hit occurred
-            with tongue {
-                other.insect = instance_place(x, y, obj_swarm)
+    if point_distance(0, 0, x_tilt, y_tilt) &gt; aim_deadzone {
+        var new_angle = point_direction(0, 0, x_tilt, y_tilt)
+        if(gamepad == global.player2) {
+            if new_angle &gt; aim_angle_min and new_angle &lt; aim_angle_max {
+                aim_angle = new_angle
+            } else {
+                aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
             }
-            if instance_exists(insect) {
-                hit = true
-                type = insect.object_index
-                //insect = noone
-                
-                switch type {
-                case obj_swarm_grass:
-                    //audio_play_sound(snd_flowers, 10, false)
-                    break
-                case obj_swarm_water:
-                    //audio_play_sound(snd_splash, 10, false)
-                    break
-                case obj_swarm_fire:
-                    //audio_play_sound(snd_fire, 10, false)
-                    break
-                default:
-                    break
-                }
-                
+        } else {
+            if new_angle &lt; aim_angle_min or new_angle &gt; aim_angle_max {
+                aim_angle = new_angle
+            } else {
+                aim_angle = scr_clamp_angle(new_angle, aim_angle_min, aim_angle_max)
             }
         }
         
-        // collision with enemy
-        with tongue {
-            if place_meeting(x, y, other.enemy.eye) {
-                // determine if a valid hit occurred
-                if scr_type_wins(other.type, other.enemy.type) and not other.fire_stun {
-                    other.enemy.healthiness--
-                    other.hit = true
-                    other.enemy.type = other.type
-                    audio_play_sound(snd_punch, 10, false);
+        if abs(angle_difference(aim_angle, target_angle)) &lt; target_lock_angle {
+            aim_angle = target_angle
+        }
+    }
+    
+    if(bite_stun) {
+        eye.image_angle = eye.image_angle + stun_eye_speed;
+    }
+    else {
+        eye.image_angle = aim_angle    
+    }
+    
+    if not fired and not biting and not bite_stun{
+        tongue.direction = aim_angle
+        tongue.image_angle = aim_angle
+        // TODO trigger threshold
+        if(gamepad_button_check_pressed(gamepad, gp_shoulderlb)){
+            biting = true;
+            fire_angle = aim_angle;
+            head.image_speed = bite_speed;   
+            head.image_angle = aim_angle;
+            if enemy.target_angle == enemy.fire_angle and 
+                    point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range and 
+                    abs(angle_difference(target_angle, fire_angle)) &lt;= 10 and
+                    //enemy.tongue.speed &gt; 0 and 
+                    not enemy.hit {
+                bite_success = true;
+                audio_play_sound(snd_bite_succ, 10, false);
+                enemy.fire_stun = true;
+                alarm[0] = room_speed * .25;
+            } else {
+                bite_stun = true;
+                audio_play_sound(snd_eye_roll, 10, false);
+                alarm[1] = room_speed;
+            }
+        }
+    } else if fired {
+        // tongue collision
+        // collision with insect
+        if not hit {
+            if not instance_exists(insect) {
+                // valid hit occurred
+                with tongue {
+                    other.insect = instance_place(x, y, obj_swarm)
+                }
+                if instance_exists(insect) {
+                    hit = true
+                    type = insect.object_index
+                    //insect = noone
                     
-                    if other.enemy.healthiness &lt;= 0 {
-                        global.winner = other.gamepad
-                        room_goto(rm_final)
+                    switch type {
+                    case obj_swarm_grass:
+                        //audio_play_sound(snd_flowers, 10, false)
+                        break
+                    case obj_swarm_water:
+                        //audio_play_sound(snd_splash, 10, false)
+                        break
+                    case obj_swarm_fire:
+                        //audio_play_sound(snd_fire, 10, false)
+                        break
+                    default:
+                        break
+                    }
+                    
+                }
+            }
+            
+            // collision with enemy
+            with tongue {
+                if place_meeting(x, y, other.enemy.eye) {
+                    // determine if a valid hit occurred
+                    if scr_type_wins(other.type, other.enemy.type) and not other.fire_stun {
+                        other.enemy.healthiness--
+                        other.hit = true
+                        other.enemy.type = other.type
+                        audio_play_sound(snd_punch, 10, false);
+                        
+                        if other.enemy.healthiness &lt;= 0 {
+                            global.winner = other.gamepad
+                            room_goto(rm_final)
+                        }
                     }
                 }
             }
         }
-    }
-    
-
-    // check tongue distance
-    var distance = point_distance(tongue.start_x, tongue.start_y, tongue.x, tongue.y)
-    with tongue {
-        length = distance
-    }
-    if distance &gt; tongue.sprite_width {
-        // return
-        tongue.speed = -fire_speed
-        tongue.length = tongue.sprite_width
-    } else if abs(fire_angle - point_direction(tongue.start_x, tongue.start_y, tongue.x, tongue.y)) &gt; 0.1 {
-        // stop
-        head.image_speed = -1.5;
-        tongue.speed = 0
-        tongue.length = 0
-        tongue.x = tongue.start_x
-        tongue.y = tongue.start_y
-        fired = false
-        hit = false
-        fire_stun = false;
-        insect = noone;
         
-        //audio_play_sound(snd_tongue_in, 10, false)
-        //if instance_exists(insect) {
-        //    type = insect.object_index
-        //    insect = noone
-        //}
-    }
-} else if biting {
-    if head.image_index + head.image_speed &gt;= sprite_get_number(head.target_sprite_index) {
-        head.image_speed = -bite_speed;
-    }
     
-    if head.image_index + head.image_speed &lt; 0 {
-        head.image_speed = 0
-        biting = false;
-    }
-    if (bite_success) {
-        enemy.tongue.x = head.x;
-        enemy.tongue.speed = 0;
-    }
-}
+        // check tongue distance
+        var distance = point_distance(tongue.start_x, tongue.start_y, tongue.x, tongue.y)
+        with tongue {
+            length = distance
+        }
+        if distance &gt; tongue.sprite_width {
+            // return
+            tongue.speed = -fire_speed
+            tongue.length = tongue.sprite_width
+        } else if abs(fire_angle - point_direction(tongue.start_x, tongue.start_y, tongue.x, tongue.y)) &gt; 0.1 {
+            // stop
+            head.image_speed = -1.5;
+            tongue.speed = 0
+            tongue.length = 0
+            tongue.x = tongue.start_x
+            tongue.y = tongue.start_y
+            fired = false
+            hit = false
+            fire_stun = false;
+            insect = noone;
             
-// type switching
-switch type {
-case obj_swarm_grass:
-    target_image_index = 0
-    head.target_sprite_index = spr_head_grass
-    break
-case obj_swarm_water:
-    target_image_index = 1
-    head.target_sprite_index = spr_head_water
-    break
-case obj_swarm_fire:
-    target_image_index = 2
-    head.target_sprite_index = spr_head_fire
-    break
-default:
-    break
-}
-
-if target_image_index != prev_image_index and target_image_alpha == 1.0 {
-    target_image_alpha = 0.0
-}
-
-if target_image_alpha &lt; 1.0 {
-    target_image_alpha += fade_speed;
-} 
-if target_image_alpha &gt;= 1.0 {
-    target_image_alpha = 1.0
-    prev_image_index = target_image_index
-    head.prev_sprite_index = head.target_sprite_index
-}
-
-// tongue fire
-var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
-if trigger_val &gt; fire_deadzone {
-    if can_fire and not fired and not fire_stun and not bite_stun{
-        head.image_speed = head_fire_speed;    
-        head.image_angle = aim_angle
-    
-        fired = true
-        can_fire = false
-        fire_angle = aim_angle
-        tongue.speed = fire_speed
-        tongue.direction = aim_angle
-        tongue.image_angle = aim_angle
+            //audio_play_sound(snd_tongue_in, 10, false)
+            //if instance_exists(insect) {
+            //    type = insect.object_index
+            //    insect = noone
+            //}
+        }
+    } else if biting {
+        if head.image_index + head.image_speed &gt;= sprite_get_number(head.target_sprite_index) {
+            head.image_speed = -bite_speed;
+        }
         
-        audio_play_sound(snd_tongue_out, 10, false)
+        if head.image_index + head.image_speed &lt; 0 {
+            head.image_speed = 0
+            biting = false;
+        }
+        if (bite_success) {
+            enemy.tongue.x = head.x;
+            enemy.tongue.speed = 0;
+        }
     }
-} else if not fire_stun {
-    if fired {
-        // return
-        tongue.speed = -fire_speed
+                
+    // type switching
+    switch type {
+    case obj_swarm_grass:
+        target_image_index = 0
+        head.target_sprite_index = spr_head_grass
+        break
+    case obj_swarm_water:
+        target_image_index = 1
+        head.target_sprite_index = spr_head_water
+        break
+    case obj_swarm_fire:
+        target_image_index = 2
+        head.target_sprite_index = spr_head_fire
+        break
+    default:
+        break
     }
-    can_fire = true
+    
+    if target_image_index != prev_image_index and target_image_alpha == 1.0 {
+        target_image_alpha = 0.0
+    }
+    
+    if target_image_alpha &lt; 1.0 {
+        target_image_alpha += fade_speed;
+    } 
+    if target_image_alpha &gt;= 1.0 {
+        target_image_alpha = 1.0
+        prev_image_index = target_image_index
+        head.prev_sprite_index = head.target_sprite_index
+    }
+    
+    // tongue fire
+    var trigger_val = gamepad_button_check(gamepad, gp_shoulderrb)
+    if trigger_val &gt; fire_deadzone {
+        if can_fire and not fired and not fire_stun and not bite_stun{
+            head.image_speed = head_fire_speed;    
+            head.image_angle = aim_angle
+        
+            fired = true
+            can_fire = false
+            fire_angle = aim_angle
+            tongue.speed = fire_speed
+            tongue.direction = aim_angle
+            tongue.image_angle = aim_angle
+            
+            audio_play_sound(snd_tongue_out, 10, false)
+        }
+    } else if not fire_stun {
+        if fired {
+            // return
+            tongue.speed = -fire_speed
+        }
+        can_fire = true
+    }
+    
+    var new_eye_dir = head.image_angle + eye_dir;
+    if(gamepad == global.player2) {
+        new_eye_dir += 180;
+    }
+    var x_off = lengthdir_x(eye_dist, new_eye_dir);
+    var y_off = lengthdir_y(eye_dist, new_eye_dir);
+    
+    var new_eye_open_dir = head.image_angle + eye_open_dir;
+    if(gamepad == global.player2) {
+        new_eye_open_dir += 180;
+    }
+    var x_open_off = lengthdir_x(eye_open_dist, new_eye_open_dir);
+    var y_open_off = lengthdir_y(eye_open_dist, new_eye_open_dir);
+    
+    var alpha = head.image_index / sprite_get_number(head.target_sprite_index);
+    eye.x = head.x + lerp(x_off, x_open_off, alpha);
+    eye.y = head.y + lerp(y_off, y_open_off, alpha);
+    
+    var head_offset = head_scale * alpha * 60
+    var up = 90
+    if gamepad == global.player2 {
+        up = -90
+    }
+    head_xoffset = lengthdir_x(head_offset, head.image_angle + up)
+    head_yoffset = lengthdir_y(head_offset, head.image_angle + up)
+    head.image_xscale = 1 + head_scale * alpha
+    head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
+    if(enemy.bite_success) {
+        eye.image_xscale += 0.03
+        eye.image_yscale += 0.03
+    } else if (eye.image_xscale &gt; 1 + head_scale * alpha){
+        eye.image_xscale -= 0.03
+        eye.image_yscale -= 0.03
+    } else {
+        eye.image_xscale = 1 + head_scale * alpha
+        eye.image_yscale = 1 + head_scale * alpha
+    }
 }
-
-var new_eye_dir = head.image_angle + eye_dir;
-if(gamepad == global.player2) {
-    new_eye_dir += 180;
-}
-var x_off = lengthdir_x(eye_dist, new_eye_dir);
-var y_off = lengthdir_y(eye_dist, new_eye_dir);
-
-var new_eye_open_dir = head.image_angle + eye_open_dir;
-if(gamepad == global.player2) {
-    new_eye_open_dir += 180;
-}
-var x_open_off = lengthdir_x(eye_open_dist, new_eye_open_dir);
-var y_open_off = lengthdir_y(eye_open_dist, new_eye_open_dir);
-
-var alpha = head.image_index / sprite_get_number(head.target_sprite_index);
-eye.x = head.x + lerp(x_off, x_open_off, alpha);
-eye.y = head.y + lerp(y_off, y_open_off, alpha);
-
-var head_offset = head_scale * alpha * 60
-var up = 90
-if gamepad == global.player2 {
-    up = -90
-}
-head_xoffset = lengthdir_x(head_offset, head.image_angle + up)
-head_yoffset = lengthdir_y(head_offset, head.image_angle + up)
-head.image_xscale = 1 + head_scale * alpha
-head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
-if(enemy.bite_success) {
-    eye.image_xscale += 0.03
-    eye.image_yscale += 0.03
-} else if (eye.image_xscale &gt; 1 + head_scale * alpha){
-    eye.image_xscale -= 0.03
-    eye.image_yscale -= 0.03
-} else {
-    eye.image_xscale = 1 + head_scale * alpha
-    eye.image_yscale = 1 + head_scale * alpha
-}
-
 
 </string>
           </argument>
