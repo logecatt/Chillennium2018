@@ -98,12 +98,13 @@ if(gamepad == global.player2) {
 eye.x += eye_offset_x;
 eye.y += eye_offset_y
 
-
-bite_success_range = 100;
+bite_speed = 1.5
+bite_success_range = 150;
 bite_success = false;
 biting = false;
 bite_open = true;
 bite_down = false;
+stun_multiplier = 0.33;
 </string>
           </argument>
         </arguments>
@@ -155,7 +156,17 @@ eye.image_angle = aim_angle
 if not fired {
     tongue.direction = aim_angle
     tongue.image_angle = aim_angle
-} else {
+    if(gamepad_button_check_pressed(gamepad, gp_shoulderlb)) {
+        biting = true;
+        if(enemy.target_angle == enemy.fire_angle) {
+            if(point_distance(head.x, head.y, enemy.tongue.x, enemy.tongue.y) &lt; bite_success_range) {
+                if(angle_difference(aim_angle, fire_angle) &lt;= 10) {
+                    bite_success = true;
+                }
+            }
+        }
+    }
+} else if fired {
     // tongue collision
     // collision with insect
     if not hit {
@@ -245,6 +256,28 @@ if not fired {
         //    type = insect.object_index
         //    insect = noone
         //}
+    }
+} else if biting {
+    if(bite_open) {
+        head.image_speed = bite_speed;
+        bite_open = false;
+        bite_down = true;
+    }
+    if(bite_down &amp;&amp; head.image_speed == 0) {
+        bite_down = false;
+        head.image_speed = -bite_speed;
+    }
+    if(!bite_down &amp;&amp; head.image_speed == 0) {
+        biting = false;
+        bite_open = true;
+    }
+    if(bite_success) {
+        enemy.tongue.x = head.x;
+        enemy.tongue.y = head.y;
+        alarm[0] = room_speed * 0.2;
+    } else {
+        
+        
     }
 }
             
