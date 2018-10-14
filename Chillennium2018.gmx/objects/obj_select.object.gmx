@@ -157,19 +157,19 @@ if(gamepad_button_check_pressed(global.player, gp_face2)) {
             draw_sprite(spr_controller, 0, room_width/2, dy);
         }
         if(p1_confirm &amp;&amp; global.player1 == gamepad) {
-            draw_text(room_width/3, dy + 70, "confirm");
+            draw_text_outlined(room_width/3, dy + 70, 3, c_black, c_white, "confirm");
         }
         if(p2_confirm &amp;&amp; global.player2 == gamepad) {
-            draw_text((2 * room_width)/3, dy + 70, "confirm");
+            draw_text_outlined((2 * room_width)/3, dy + 70, 3, c_black, c_white, "confirm");
         }
         if(p1_confirm &amp;&amp; p2_confirm) {
-            draw_text(room_width/2, room_height/2, "Press A to Start!");
+            draw_text_outlined(room_width/2, room_height/2, 3, c_black, c_white, "Press A to Start!");
         }
     }
 }
 else {
     draw_set_halign(fa_center);
-    draw_text(room_width/2, room_height/2, "Connect 2 gamepads to continue!");
+    draw_text_outlined(room_width/2, room_height/2, 3, c_black, c_white, "Connect 2 gamepads to continue!");
 }
 </string>
           </argument>
