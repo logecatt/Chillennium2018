@@ -29,7 +29,6 @@
     <sprite>sprites\spr_tongue</sprite>
     <sprite>sprites\spr_eye</sprite>
     <sprite>sprites\spr_controller</sprite>
-    <sprite>sprites\spr_poison</sprite>
     <sprite>sprites\spr_head_fire</sprite>
     <sprite>sprites\spr_head_grass</sprite>
     <sprite>sprites\spr_head_water</sprite>
@@ -74,7 +73,6 @@
     <object>objects\obj_grasshopper</object>
     <object>objects\obj_mudskipper</object>
     <object>objects\obj_simple_chameleon</object>
-    <object>objects\obj_help_attacker</object>
     <object>objects\obj_heart</object>
   </objects>
   <rooms name="rooms">

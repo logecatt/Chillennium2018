@@ -62,11 +62,12 @@ if x &gt; room_width/2 {
 }
 aim_deadzone = 0.5
 fire_deadzone = 0.5
-fire_speed = 20
+fire_speed = room_speed / 4
 target_lock_angle = 12.5
-fade_speed = 0.1
+fade_speed = room_speed / 1200
 head_scale = 0.4
-head_fire_speed = 1.5
+head_fire_speed = room_speed / 80
+eye_bitten_speed = room_speed / 4000
 
 var eye_offset_x = 60;
 var eye_offset_y = -12;
@@ -98,9 +99,9 @@ if(gamepad == global.player2) {
 eye.x += eye_offset_x;
 eye.y += eye_offset_y
 
-stun_eye_speed = 6;
+stun_eye_speed = room_speed / 20;
 
-bite_speed = 1.25
+bite_speed = room_speed / 96
 bite_success_range = 320;
 bite_success = false;
 biting = false;
@@ -258,23 +259,7 @@ bite_success = false;
                 if instance_exists(insect) {
                     hit = true
                     type = insect.object_index
-                    event_user(0);
-                    //insect = noone
-                    
-                    switch type {
-                    case obj_swarm_grass:
-                        //audio_play_sound(snd_flowers, 10, false)
-                        break
-                    case obj_swarm_water:
-                        //audio_play_sound(snd_splash, 10, false)
-                        break
-                    case obj_swarm_fire:
-                        //audio_play_sound(snd_fire, 10, false)
-                        break
-                    default:
-                        break
-                    }
-                    
+                    event_user(0);                    
                 }
             }
             
@@ -317,7 +302,7 @@ bite_success = false;
             tongue.length = tongue.sprite_width
         } else if abs(fire_angle - point_direction(tongue.start_x, tongue.start_y, tongue.x, tongue.y)) &gt; 0.1 {
             // stop
-            head.image_speed = -1.5;
+            head.image_speed = -head_fire_speed;
             tongue.speed = 0
             tongue.length = 0
             tongue.x = tongue.start_x
@@ -431,12 +416,12 @@ bite_success = false;
     head_yoffset = lengthdir_y(head_offset, head.image_angle + up)
     head.image_xscale = 1 + head_scale * alpha
     head.image_yscale = sign(head.image_yscale) * (1 + head_scale * alpha)
-    if(enemy.bite_success) {
-        eye.image_xscale += 0.03
-        eye.image_yscale += 0.03
-    } else if (eye.image_xscale &gt; 1 + head_scale * alpha){
-        eye.image_xscale -= 0.03
-        eye.image_yscale -= 0.03
+    if enemy.bite_success {
+        eye.image_xscale += eye_bitten_speed
+        eye.image_yscale += eye_bitten_speed
+    } else if fire_stun and eye.image_xscale &gt; 1 + head_scale * alpha {
+        eye.image_xscale -= eye_bitten_speed
+        eye.image_yscale -= eye_bitten_speed
     } else {
         eye.image_xscale = 1 + head_scale * alpha
         eye.image_yscale = 1 + head_scale * alpha

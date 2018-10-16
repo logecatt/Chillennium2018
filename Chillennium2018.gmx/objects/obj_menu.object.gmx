@@ -122,6 +122,13 @@ if(gamepad != -1) {
         audio_play_sound(snd_tongue_out, 10, false);
         alarm[0] = room_speed * 0.6;
     }
+    
+    // debug cheat
+    if gamepad_button_check_pressed(gamepad, gp_face2) and gamepad_button_check_pressed(gamepad, gp_face3) and gamepad_button_check_pressed(gamepad, gp_face4) {
+        global.player1 = global.player
+        global.player2 = -1
+        room_goto(rm_main)
+    }
 }
 </string>
           </argument>

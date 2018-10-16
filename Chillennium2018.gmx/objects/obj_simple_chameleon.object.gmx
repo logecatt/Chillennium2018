@@ -77,10 +77,9 @@ aim_angle = 180 - aim_angle
 fire_angle = 180 - fire_angle
 target_angle = 180 - target_angle
 
-fire_speed = 20
-fade_speed = 0.1
+fire_speed = room_speed / 4
 head_scale = 0.4
-head_fire_speed = 1.5
+head_fire_speed = room_speed / 80
 
 var eye_offset_x = 60 * image_scale;
 var eye_offset_y = -12 * image_scale;
@@ -108,9 +107,9 @@ eye.image_yscale = image_scale;
 eye.x += eye_offset_x;
 eye.y += eye_offset_y
 
-stun_eye_speed = 6;
+stun_eye_speed = room_speed / 20;
 
-bite_speed = 1.25
+bite_speed = room_speed / 96
 biting = false;
 // You played yourself
 bite_stun = false;
@@ -120,7 +119,7 @@ bite_ready = false
 should_hit = false
 enemy_type = noone
 enemy_eye = noone
-loop_time = 2
+loop_time = room_speed * 2
 
 head.prev_sprite_index = spr_head_grass
 head.target_sprite_index = spr_head_grass
@@ -287,7 +286,7 @@ if bite_ready {
     }
     
     bite_ready = false
-    alarm[2] = room_speed * loop_time
+    alarm[2] = loop_time
 }
 
 if biting {
