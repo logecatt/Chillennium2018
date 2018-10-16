@@ -245,35 +245,19 @@ if(gamepad_button_check_pressed(global.player, gp_face1)) {
     fire_ready = true;
 }
 
-/*with(obj_menu) {
-    switch(select) {
-    case 0: 
-        other.y = y1 + 10;
-        other.eye.y = y1 + 10;
-        other.head.y = y1 + 10;
-        other.tongue.y = y1 + 10;
-        break;
-    case 1: 
-        other.y = y2 + 10;
-        other.eye.y = y2 + 10;
-        other.head.y = y2 + 10;
-        other.tongue.y = y2 + 10;
-        break;
-    case 2: 
-        other.y = y3 + 10;
-        other.eye.y = y3 + 10;
-        other.head.y = y3 + 10;
-        other.tongue.y = y2 + 10;
-        break;
-    case 3: 
-        other.y = y4 + 10;
-        other.eye.y = y4 + 10;
-        other.head.y = y4 + 10;
-        other.tongue.y = y2 + 10;
-        break;
-    }
+if global.player == -1 {
+    image_alpha = 0
+    target_image_alpha = 0
+    eye.image_alpha = 0
+    head.image_alpha = 0
+    exit
+} else {
+    image_alpha = 1
+    target_image_alpha = 1
+    eye.image_alpha = 1
+    head.image_alpha = 1
 }
-*/
+
 if bite_ready {
     biting = true;
     head.image_speed = bite_speed;
@@ -380,7 +364,6 @@ eye.image_yscale = (1 + head_scale * alpha) * image_scale;
 draw_sprite_ext(sprite_index, target_image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, target_image_alpha)
 draw_sprite_ext(head.prev_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, head.image_alpha)
 draw_sprite_ext(head.target_sprite_index, head.image_index, head.x + head_xoffset, head.y + head_yoffset, head.image_xscale, head.image_yscale, head.image_angle, head.image_blend, target_image_alpha)
-
 </string>
           </argument>
         </arguments>
